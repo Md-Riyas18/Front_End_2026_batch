@@ -1,0 +1,182 @@
+from fastapi import APIRouter, Request
+from pydantic import BaseModel
+from typing import Optional, Dict, Any, Tuple
+import time
+import hashlib
+import json
+
+from database import get_connection
+from ai_security.security_bridge import log_disclaimer_and_optional_audit
+from ai_security.security_state import (
+    is_user_blocked as is_user_blocked_local,
+    unblock_user as unblock_user_local,
+    list_blocked_users,
+)
+from ai_security.services.security_service import evaluate_security
+
+router = APIRouter()
+
+VIEW_LIMIT_ROLES = {"doctor", "admin"}
+VIEW_LIMIT_ACTIONS = {"view_record", "patient_id_access"}
+
+# Prevent duplicate counting of the same resumed request
+RECENT_VIEW_UPDATE_KEYS: Dict[str, float] = {}
+RECENT_VIEW_UPDATE_TTL_SECONDS = 20
+
+
+class BehaviourRequest(BaseModel):
+    username: str
+    role: str
+    action: str
+
+    event_type: Optional[str] = None
+    login_success: Optional[bool] = True
+    login_hour: Optional[int] = None
+
+    user_id: Optional[str] = None
+    record_owner_id: Optional[str] = None
+    patient_id: Optional[str] = None
+    patient_category: Optional[str] = None
+
+    session_id: Optional[str] = "default"
+
+    record_access_count: Optional[int] = 0
+    requested_count: Optional[int] = 1
+    doctor_assigned: Optional[bool] = True
+    suspicious_events_last_24h: Optional[int] = None
+    reverify_face_required: Optional[bool] = False
+    requested_role: Optional[str] = None
+    role_misuse_count: Optional[int] = 0
+
+    daily_view_count: Optional[int] = 0
+    daily_download_count: Optional[int] = 0
+    daily_update_count: Optional[int] = 0
+
+    wrong_password_count: Optional[int] = 0
+    wrong_email_count: Optional[int] = 0
+    wrong_otp_count: Optional[int] = 0
+    wrong_face_count: Optional[int] = 0
+    session_face_fail_count: Optional[int] = 0
+
+    unassigned_access_count: Optional[int] = 0
+
+    updated_by: Optional[str] = None
+    medicine: Optional[str] = None
+    doctor_notes: Optional[str] = None
+
+    face_verified: Optional[bool] = None
+    otp_verified: Optional[bool] = None
+
+    continue_after_warning: Optional[bool] = False
+
+
+class DisclaimerRequest(BaseModel):
+    username: str
+    role: str
+    disclaimer_type: str
+
+
+class ManualUserControlRequest(BaseModel):
+    username: str
+    role: str
+    admin_name: Optional[str] = "admin1"
+
+
+def _purge_recent_view_update_keys() -> None:
+    now = time.time()
+    expired = [
+        key for key, ts in RECENT_VIEW_UPDATE_KEYS.items()
+        if now - ts > RECENT_VIEW_UPDATE_TTL_SECONDS
+    ]
+    for key in expired:
+        RECENT_VIEW_UPDATE_KEYS.pop(key, None)
+
+
+def _make_view_update_key(
+    username: str,
+    session_id: str,
+    mode: str,
+    total_so_far: int,
+    verified_ceiling: int,
+    requested_count: int,
+    new_total: int,
+    new_verified_ceiling: int,
+    face_verified: bool,
+) -> str:
+    payload = {
+        "username": username,
+        "session_id": session_id or "default",
+        "mode": mode,
+        "total_so_far": int(total_so_far),
+        "verified_ceiling": int(verified_ceiling),
+        "requested_count": int(requested_count),
+        "new_total": int(new_total),
+        "new_verified_ceiling": int(new_verified_ceiling),
+        "face_verified": bool(face_verified),
+    }
+    raw = json.dumps(payload, sort_keys=True)
+    return hashlib.sha256(raw.encode("utf-8")).hexdigest()
+
+
+def _mark_view_update_key_seen(key: Optional[str]) -> None:
+    if not key:
+        return
+    _purge_recent_view_update_keys()
+    RECENT_VIEW_UPDATE_KEYS[key] = time.time()
+
+
+def _was_view_update_key_seen(key: Optional[str]) -> bool:
+    if not key:
+        return False
+    _purge_recent_view_update_keys()
+    return key in RECENT_VIEW_UPDATE_KEYS
+
+
+def _get_target_ceiling(new_total: int) -> int:
+    if new_total <= 10:
+        return 10
+    if new_total <= 20:
+        return 20
+    if new_total <= 30:
+        return 30
+    return 999
+
+
+def _get_today_limit_row(username: str) -> Optional[Dict[str, Any]]:
+    conn = get_connection()
+    cursor = conn.cursor(dictionary=True)
+    try:
+        cursor.execute(
+            """
+            SELECT
+                username,
+                event_date,
+                COALESCE(daily_view_count, 0) AS daily_view_count,
+                COALESCE(daily_download_count, 0) AS daily_download_count,
+                COALESCE(daily_update_count, 0) AS daily_update_count,
+                COALESCE(warning_count, 0) AS warning_count,
+                COALESCE(category_access_total, 0) AS category_access_total,
+                COALESCE(category_verified_ceiling, 10) AS category_verified_ceiling,
+                COALESCE(patient_id_access_total, 0) AS patient_id_access_total,
+                COALESCE(patient_id_verified_ceiling, 10) AS patient_id_verified_ceiling
+            FROM user_daily_limits
+            WHERE username = %s
+              AND event_date = CURDATE()
+            LIMIT 1
+            """,
+            (username,),
+        )
+        return cursor.fetchone()
+    finally:
+        cursor.close()
+        conn.close()
+
+
+
+
+
+
+
+
+
+
