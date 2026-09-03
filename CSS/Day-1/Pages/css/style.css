@@ -1,0 +1,33 @@
+/* #universal selector */
+*{
+    color: black;
+}
+/* #Element selector */
+button{
+    color: rgb(255, 255, 255);
+    background-color:rgb(49, 13, 13);
+}
+/* Class selector: */
+.menu{
+    color: rgb(77, 4, 4);
+}
+/* #id selector */
+#Cappuccino{
+    color:rgb(131, 0, 0);
+}
+/* #group selector */
+h3{
+    color: rgb(131, 0, 0);
+}
+/* #decendant element: */
+div p{
+    color: rgb(255, 183, 89);
+}
+/* #child element: */
+div>p{
+    color: black;
+}
+
+a{
+    color: rgb(53, 20, 20);
+}
