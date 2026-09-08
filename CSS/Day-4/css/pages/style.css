@@ -1,0 +1,38 @@
+*{
+    margin: 0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior: smooth;
+}
+
+a{
+    text-decoration: none;
+}
+
+.parent{
+    background-color: antiquewhite;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.student{
+    padding: 15px;
+}
+
+.clg{
+    padding: 15px;
+}
+
+.nav{
+    padding: 40px;
+    display: flex;
+    justify-content: center;
+    margin-left: auto;
+    margin-top: -200px ;
+    gap: 30px;
+}
