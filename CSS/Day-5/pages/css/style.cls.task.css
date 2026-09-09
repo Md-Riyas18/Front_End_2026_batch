@@ -1,0 +1,72 @@
+*{
+    padding: 0%;
+    margin: 0%;
+    box-sizing: border-box;      
+}
+
+html{
+    scroll-behavior: smooth;
+}
+
+body{
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.parent{
+    background-color: rgb(255, 255, 255);
+    color: black;
+    padding: 400px;
+    margin: 30px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.cards{
+    background-color: aliceblue;
+    padding: 0;
+    height: 520px;
+    width: 270px;
+    border-radius: 5px;
+    
+}
+
+.cards > img{
+    background-color: rgb(2, 5, 155);
+    width:270px ;
+    padding: 70px;
+    height: 250px;   
+    border-radius: 5px;
+    
+    
+}
+    
+
+.cards > p{
+    padding: 10px;
+   
+}
+
+.cards > h4{
+    background-color: rgb(186, 186, 245);
+    padding: 3px;
+    width: 60px;
+    border-radius: 5px;
+    margin: 20px;
+
+}
+
+.cards > h2{
+
+    padding: 13px;
+    margin-bottom :10px;
+}
+
+
+.cards > button{
+    background-color: blue;
+    color: aliceblue;
+    padding: 10px;
+    border-radius: 6px;
+    border: 0;
+    margin: 20px;
+}
