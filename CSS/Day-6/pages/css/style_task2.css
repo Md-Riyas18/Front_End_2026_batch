@@ -1,0 +1,65 @@
+*{
+    margin: 0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior: smooth;
+}
+
+a{
+    text-decoration: none;
+}
+
+
+.parent{
+    background-color: blanchedalmond;
+    padding: 30px;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 30px;
+  
+    
+    
+        
+}
+
+
+.cards{
+    background-color: rgb(253, 255, 254);
+    padding: 5px;
+    height: 350px;
+    width: 300px;
+    border: 1px solid;
+   
+}
+
+.cards > h3{
+    padding: 10px;
+}
+
+.cards > h4{
+    padding: 10px;
+}
+
+.cards > p{
+    padding: 10px;
+}
+
+.cards > img{
+    padding: 30px;
+    margin-left: 60px;
+    transition:all 2s;
+    
+}
+
+
+.cards > img:hover {
+    transform: scale(1.1);
+    border: 5px solid rgb(220, 220, 251);
+    opacity: 0.7;
+    cursor: pointer;
+}
