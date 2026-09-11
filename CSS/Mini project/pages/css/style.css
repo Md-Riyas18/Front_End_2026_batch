@@ -12,11 +12,20 @@ body{
     font-family: Arial, Helvetica, sans-serif;
 }
 
+a{
+    text-decoration: none;
+}
+
 .parent{
-    background-color: antiquewhite;
+    background-color: azure;
     padding: 40px;
     margin: o;
     display: flex;
+    justify-content: center;
+    width: 100vw;
+    position: fixed;
+    z-index: 10;
+    box-shadow: -9px -4px 5px 4px gray;
 }
 
 
@@ -25,31 +34,97 @@ body{
 
 .menu{
   
+    background-color:azure;
+    display: flex;
     padding: 10px;
-    height: 40px;
-    margin-left: 150px;
-    margin-top: -10px;
-}
-
-
-.icon{
-    
-    padding: 3px;
-    width: 60px;
-    height: 40px;
-    margin-left: 150px;
-    margin-top: -25px;
-}
-
-
-.searchbox{
-    padding: 10px;
-    width: 800px;
     height: 30px;
-    margin-left: 20px;
+    width: 20px;
+    font-size: medium;
+    margin-left: -50px;
+    margin-top: -10px;
+    gap: 7px;
+}
+
+.menu > img{
+    height: 20px;
+    width: 20px;
+    margin-left: 10px;
+}
+
+.menutext{
+    transition: all 0.5s;
+    width: 100px;
+    cursor: pointer;
+}
+
+.menutext:hover{
+    background-color: rgb(196, 193, 193);
+    width: 150px;
+    height: 25px;
+    border-radius: 10px;
+}
+.icon{
+    padding: 6px;
+    width: 50px;
+    height: 40px;
+    margin-left: 700px;
+    margin-top: -20px;
+}
+
+
+.coner{
+    margin-left: 300px;
+    display: flex;
+   
+}
+
+.nav{
+    background-color: azure;
+    display: flex;
+    padding: 10px;
+    width: 0px;
+    height: 0px;
+    font-weight: bold;
+    margin-left: 70px;
     margin-top: -5px;
     border: 0cap;
-    border-radius: 7px;
-   
+    border-radius: 10px;
+}
 
+.nav > a{
+    white-space: nowrap;
+    background-color: azure;
+    color: black;
+    padding: 10px;
+    margin-top: -9px;
+    margin-left: -9px;
+    font-size: medium;
+    transition: all 0.5s;
+    
+  
+}
+
+.nav > a:active{
+    background-color: rgb(196, 193, 193);
+    height: 30px;
+    border-radius: 10px;
+}
+
+.nav > a:hover{
+    background-color: rgb(196, 193, 193);
+    height: 30px;
+    border-radius: 10px;
+}
+
+
+
+.img{
+    color: rgb(255, 251, 251);
+    margin-top: 3px;
+    margin-left: 200px;
+    margin-right: -70px;
+    height: 20px;
+    width: 20px;
+    
+  
 }
