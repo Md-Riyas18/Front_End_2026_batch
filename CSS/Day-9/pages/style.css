@@ -26,9 +26,11 @@ a{
     justify-content: space-between;
     align-content: center;
     box-shadow: -8px -6px 4px 5px gray;
-    position: relative;
-    z-index: 3;
+    position: fixed;
+    z-index: 4;
 }
+
+
 
 .img{
     padding-left: 15px;
@@ -116,11 +118,13 @@ a{
     background-color: rgb(255, 255, 255);
     width: 100vw;
     height: fit-content;
-    padding: 10PX;
+    padding: 70px 10px 10px ;
     display: flex;
     justify-content: space-between;
     flex-direction: column;
     align-content: center;
+    position: relative;
+    z-index: 3;
 }
 
 .text{
@@ -164,6 +168,8 @@ a{
     justify-content: center;
     flex-direction: row;
     gap: 18px;
+    position: relative;
+    z-index: 3;
 
 }
 
@@ -207,6 +213,8 @@ a{
     height: 180vh;
     width: 100vw;
     gap: 2px;
+    position: relative;
+    z-index: 3;
 }
 
 .cards{
@@ -216,12 +224,25 @@ a{
     height: 250px;
     width: 290px;
     border-radius: 15px;
+    position: relative;
+    z-index: 3;
+    transition: all 0.5s;
 }
 
+
+.cards:hover{
+    border-color: #47474f;
+}
 
 .cards > svg{
     margin-bottom: 15px;
 }
+
+.cards > svg:hover{
+    transform:scale(1.1);
+}
+
+
 .cards > h3{
     font-family: Graphik, Arial, sans-serif;
     font-size: 20px;
@@ -237,3 +258,23 @@ a{
     font-weight: 400;
     letter-spacing: .5px;
 }
+
+
+.cards > h4{
+    position: absolute;
+    z-index: 2;
+    font-family: Graphik, Arial, sans-serif;
+    font-size: small;
+    height: 25px;
+    font-weight: 200;
+    color: #343435;
+    background-color: rgb(217, 245, 255);
+    padding: 5px;
+    margin-top: -13px; 
+    margin-left: 210px;
+    border-radius: 3px;
+}
+
+
+
+
