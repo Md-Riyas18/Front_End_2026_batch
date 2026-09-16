@@ -1,0 +1,25 @@
+.parent{
+    background-color: rgb(163, 146, 121);
+    padding: 20px;
+    margin: 20px;
+}
+.cards{
+    background-color: azure;
+    padding: 20px;
+    margin: 20px;
+    width: 350px;
+    height: 250px;
+    text-align: center;
+    margin:auto;
+    margin-bottom: 50px;
+
+    
+}
+div  > img{
+    width: 300px;
+}
+
+.cards2{
+    width: 200px;
+}
+

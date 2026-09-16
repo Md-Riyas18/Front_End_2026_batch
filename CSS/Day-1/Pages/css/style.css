@@ -1,9 +1,10 @@
 /* #universal selector */
-*{
+/* *{
     color: black;
-}
+} */
 /* #Element selector */
-button{
+button {
+
     color: rgb(255, 255, 255);
     background-color:rgb(49, 13, 13);
 }
@@ -24,10 +25,26 @@ div p{
     color: rgb(255, 183, 89);
 }
 /* #child element: */
-div>p{
+div > p{
     color: black;
 }
 
 a{
     color: rgb(53, 20, 20);
 }
+
+
+
+.box {
+    background-color: aquamarine;
+}
+
+* {
+    background-color: red;
+}
+
+ #con {
+
+            background-color: rgb(126, 2, 2);
+
+        }

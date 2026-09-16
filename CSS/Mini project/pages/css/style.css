@@ -17,15 +17,18 @@ a{
 }
 
 .parent{
-    background-color: azure;
-    padding: 40px;
-    margin: o;
+    background-color: rgb(255, 255, 255);
+    padding: 30px;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     width: 100vw;
+    height: 80px;
     position: fixed;
     z-index: 10;
     box-shadow: -9px -4px 5px 4px gray;
+    position: relative;
+    align-items: center;
+   
 }
 
 
@@ -34,21 +37,18 @@ a{
 
 .menu{
   
-    background-color:azure;
+    background-color:rgb(255, 255, 255);
     display: flex;
-    padding: 10px;
-    height: 30px;
-    width: 20px;
     font-size: medium;
-    margin-left: -50px;
-    margin-top: -10px;
+    padding-left: 110px;
     gap: 7px;
 }
 
 .menu > img{
     height: 20px;
     width: 20px;
-    margin-left: 10px;
+    position: relative;
+    right:20
 }
 
 .menutext{
@@ -58,73 +58,64 @@ a{
 }
 
 .menutext:hover{
-    background-color: rgb(196, 193, 193);
-    width: 150px;
-    height: 25px;
-    border-radius: 10px;
+    color: #127749;
 }
 .icon{
-    padding: 6px;
-    width: 50px;
-    height: 40px;
-    margin-left: 700px;
-    margin-top: -20px;
+    
+    background-color: rgb(255, 255, 255);
+    width: 40px;
+    height: 50px;
+    margin-left: 200px;
+    
+    
+   
 }
 
 
 .coner{
-    margin-left: 300px;
+    
     display: flex;
+    gap: 50px;
+    
    
 }
 
 .nav{
-    background-color: azure;
+    background-color: rgb(255, 255, 255);
+    margin-right: 50px;
     display: flex;
-    padding: 10px;
-    width: 0px;
-    height: 0px;
+    align-items: center;
+    gap: 5px;
     font-weight: bold;
-    margin-left: 70px;
-    margin-top: -5px;
-    border: 0cap;
-    border-radius: 10px;
+  
 }
 
 .nav > a{
-    white-space: nowrap;
-    background-color: azure;
+    
+    background-color:rgb(255, 255, 255);
     color: black;
-    padding: 10px;
-    margin-top: -9px;
-    margin-left: -9px;
-    font-size: medium;
+    
     transition: all 0.5s;
     
   
 }
 
-.nav > a:active{
-    background-color: rgb(196, 193, 193);
-    height: 30px;
-    border-radius: 10px;
-}
 
 .nav > a:hover{
-    background-color: rgb(196, 193, 193);
-    height: 30px;
-    border-radius: 10px;
+    color: #127749;
 }
 
 
 
 .img{
-    color: rgb(255, 251, 251);
-    margin-top: 3px;
-    margin-left: 200px;
-    margin-right: -70px;
-    height: 20px;
     width: 20px;
-    
-  
+}
+
+
+
+.section_parent{
+    background-color: rgb(214, 157, 157);
+    padding: 15px;
+    margin: 40px;
+
 }
