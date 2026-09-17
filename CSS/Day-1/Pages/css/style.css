@@ -1,8 +1,4 @@
-/* #universal selector */
-/* *{
-    color: black;
-} */
-/* #Element selector */
+
 button {
 
     color: rgb(255, 255, 255);
@@ -22,7 +18,7 @@ h3{
 }
 /* #decendant element: */
 div p{
-    color: rgb(255, 183, 89);
+    color: rgb(255, 254, 253);
 }
 /* #child element: */
 div > p{
@@ -36,15 +32,14 @@ a{
 
 
 .box {
-    background-color: aquamarine;
+     background-color: aquamarine;
 }
 
 * {
-    background-color: red;
+    background-color: rgb(255, 255, 255);
 }
 
- #con {
+#con {
 
-            background-color: rgb(126, 2, 2);
-
-        }
+  background-color: rgb(255, 253, 253);
+ }
