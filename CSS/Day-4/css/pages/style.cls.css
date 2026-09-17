@@ -21,9 +21,6 @@ a{
     justify-content: center;
     flex-wrap: wrap;
     gap: 30px;
-  
-    
-    
         
 }
 
@@ -31,8 +28,9 @@ a{
 .cards{
     background-color: rgb(253, 255, 254);
     padding: 5px;
-    height: 300px;
+    height: 330px;
     width: 300px;
+    border-radius: 20px;
 }
 
 .cards > h3{
