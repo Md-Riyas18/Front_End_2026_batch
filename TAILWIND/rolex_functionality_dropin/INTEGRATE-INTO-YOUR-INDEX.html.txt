@@ -1,0 +1,4 @@
+<!-- Add these three script tags immediately before </body> in your EXISTING index.html.
+     Do not delete or replace your existing product cards or SVGs. -->
+<script src="js/products.js"></script>
+<script src="js/favourites.js"></script>

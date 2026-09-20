@@ -1,0 +1,14 @@
+/* Small shared additions only. Existing index.html Tailwind styling stays intact. */
+body { overflow-x:hidden; }
+.rolex-crown { color:#b18a4b; font-size:28px; line-height:1; }
+@keyframes rolexSlide { from { transform:translateY(-8px); opacity:0 } to { transform:translateY(0); opacity:1 } }
+.rolex-page-in { animation:rolexSlide .35s ease-out both; }
+.map-grid {
+  background-color:#eef4f2;
+  background-image:
+    linear-gradient(22deg, transparent 49.5%, rgba(255,255,255,.9) 50%, transparent 50.5%),
+    linear-gradient(112deg, transparent 49.5%, rgba(255,255,255,.9) 50%, transparent 50.5%),
+    linear-gradient(rgba(255,255,255,.5) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.5) 1px, transparent 1px);
+  background-size: 180px 180px, 220px 220px, 32px 32px, 32px 32px;
+}
