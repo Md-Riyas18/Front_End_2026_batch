@@ -33,6 +33,9 @@
 // let juiceValue = 3
 // if (milkValue >= 20 ) {
 //     console.log("milk is provided");
+
+
+
     
 // }else if (chocolateValue >= 30) {
 //     console.log("chocolate is provided");
@@ -43,6 +46,7 @@
 // }else{
 //     console.log("insufficient");
 // }
+
 
 
 // let x = 22 
@@ -57,10 +61,41 @@
 
 
 
-let x = 10
-let y = "10"
-console.log(x === y);
+// let x = 10
+// let y = "10"
+// console.log(x === y);
 
 
+let line=" "
+for (let a=1; a<=100 ; a++){
+    // console.log(a);
+    line += a + " "
+}
+console.log(line);
+
+
+let gap=" "
+for (let num=100; 0<=num ; num--){
+    // console.log(a);
+    gap += num + " "
+}
+console.log(gap);
+
+let line2= " "
+for(let odd=0 ; odd <= 100; odd++){
+    if (odd%2 == 1) {
+        line2 += odd+ " "
+    }
+}
+console.log(line2);
+
+
+let line3= " "
+for(let even=0 ; even <= 100; even++){
+    if (even%2 == 0) {
+        line3 += even+ " "
+    }
+}
+console.log(line3);
 
 
