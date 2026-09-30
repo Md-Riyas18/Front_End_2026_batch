@@ -101,9 +101,6 @@
 
 
 
-
-
-
 // 29/09/2026
 
 // let line =""
@@ -115,13 +112,46 @@
 // }
 // console.log(`$ {line} = $ {sum}`);
 
-let a = 0
-let  b = 1
+// let a = 0
+// let  b = 1
 
-let string = " "
-for(let f=0 ; f<=10 ; f++ ){
+// let string = " "
+// for(let f=0 ; f<=10 ; f++ ){
     
-}
+// }
 
 
+
+// let arr = [1,2,3,4,"pugazh","Riyas"]
+// let arr1 = arr.length - 1
+// console.log(arr[arr1]);
+
+
+// let arr3 = [1,"react","riyas","rockey"]
+// for(a = 0 ; a < arr.length-1 ; a++){
+//     console.log(arr3[a]);
+    
+// }
+
+
+
+// let fruit = ["apple","banana","orange"]
+// fruit[1] = "grapes"
+
+// console.log(fruit);
+
+
+// let fruit = ["apple","banana","orange","papaya"]
+// for( let a = 0 ; a < fruit.length-3 ; a++ ){
+//     console.log(fruit[a]);
+    
+// }
+
+
+
+let student = {
+    name:"Riyas",
+    age: 23,
+    city:"chennai"
+};
 
