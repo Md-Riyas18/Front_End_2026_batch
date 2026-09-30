@@ -94,7 +94,7 @@ if( tableNo % No == 0){
 
 // task - 10
 
-let num = 5
-for(let a = 5 , ){
+// let num = 5
+// for(let a = 5 , ){
 
-}
+// }
