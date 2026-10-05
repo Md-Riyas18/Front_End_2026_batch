@@ -31,7 +31,7 @@ let array = [10,20,30,40,50]
 let sum = 0;
 const getTotal = (numbers) =>{
     for (let index = 0; index < array.length; index++) {
-        sum = sum + array[index];
+        sum = sum + numbers[index];
     }
     return sum ;
 }
@@ -46,7 +46,7 @@ let count = 0;
 const countEven = (no) =>{
     for (let index1 = 0; index1 < array1.length; index1++) {
         if (array1[index1]%2 == 0) {
-            count = count + array1[index1];
+            count = count + no[index1];
         }
     }
     return count ;
