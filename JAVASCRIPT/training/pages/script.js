@@ -149,9 +149,169 @@
 
 
 
-let student = {
-    name:"Riyas",
-    age: 23,
-    city:"chennai"
-};
+// let student = {
+//     name:"Riyas",
+//     age: 23,
+//     city:"chennai"
+// };
 
+
+// let a = [1,2,3,4,5,6,7,8,9,10]
+// let b = []
+// const evenNoo = (normalNo , evenNo )=> {
+//     for( let i = 0 ; i < normalNo.length ; a++){
+//         if (normalNo[i]%2 == 0) {
+//            evenNo.push(normalNo[i])  
+//         }
+
+//     }
+//     return evenNo
+// }
+// console.log(evenNoo(a,b));
+  
+
+// test - task
+
+// let number = 1;
+// for(let a = 1 ; a <=5 ; a++){
+//     number = a * number  
+     
+// }
+// console.log("5! =",number);
+
+
+// let a = 0;
+// let b = 1;
+// console.log(a);
+// console.log(b);
+// for(i = 0 ; i < 6 ; i++){
+//     let c = a+b;
+//     console.log(c);
+//     a = b
+//     b = c
+// }
+
+
+// let arr = [10,15,20,25,30,35,40];
+// for (let index = 0;  index < arr.length ; index++) {
+//     if (arr[index]%2 == 0) {
+//         console.log(arr[index]);
+//     }
+// }
+
+
+// let arr = [80,75,90,85,70];
+// sum = 0 ;
+// for (let index = 0;  index < arr.length ; index++) {
+//     sum = sum + arr[index]
+// }
+// console.log(sum);
+
+
+
+// let student = {
+//     name : "Bala",
+//     age : 22,
+//     course : "JavaScript",
+//     mark : 90
+// }
+
+// console.log("Student Name :",student.name);
+// console.log("Course :",student.course);
+// console.log("Mark :",student.mark);
+
+
+
+// let student = [
+//     {
+//         name : "Arun",
+//         mark : 80
+//     },
+
+//     {
+//         name : "Kumar",
+//         mark : 45
+//     },
+
+//      {
+//         name : "Priya",
+//         mark : 90
+//     },
+
+//      {
+//         name : "Ram",
+//         mark : 35
+//     },
+// ];
+// for (let index = 0; index < student.length; index++) {
+//     if (student[index].mark >= 50) {
+//         console.log(student[index].name);
+//         console.log(student[index].mark);
+        
+//     }
+    
+// }
+
+
+
+
+
+
+
+
+// let numbers = [10, 40, 50, 24, 65, 77, 78];
+// let largest = numbers[0];
+// let secondLargest = numbers[0];
+
+// for (let index = 0; index < numbers.length; index++) {
+
+//     if (numbers[index] > largest) {
+//         secondLargest = largest;
+//         largest = numbers[index];
+//     }
+// }
+
+// console.log(secondLargest);
+
+
+
+// let product = {
+//     name: "Laptop",
+//     price: 55000,
+//     quantity: 2
+// };
+
+// let totalPrice = product.price * product.quantity
+// console.log(totalPrice);
+
+
+
+
+// let students = [
+//     { name: "Arun", mark: 80 },
+//     { name: "Kumar", mark: 65 },
+//     { name: "Priya", mark: 95 },
+//     { name: "Ram", mark: 72 }
+// ];
+
+// let highestMark = students[0].mark;
+// for (let index = 0; index < students.length; index++) {
+//     if (students[index].mark > highestMark) {
+//         highestMark = students[index].mark
+//         console.log(students[index].name);
+//         console.log(students[index].mark);
+
+//     }
+    
+// }
+
+
+
+// let students = [
+//     { name: "Arun", mark: 80 },
+//     { name: "Kumar", mark: 65 },
+//     { name: "Priya", mark: 95 },
+//     { name: "Ram", mark: 72 }
+// ];
+
+// console.log("Name :",students[0].name);
