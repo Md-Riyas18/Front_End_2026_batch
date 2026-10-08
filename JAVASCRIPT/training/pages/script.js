@@ -315,3 +315,82 @@
 // ];
 
 // console.log("Name :",students[0].name);
+
+
+// let array = [5,10,15,20,30]
+// let sum = 0;
+// for (let index = 0; index < array.length; index++) {
+//     sum = sum + array[index]
+   
+   
+// }
+// console.log(sum);
+
+
+// let a = 10
+// // for (let i = 0; i < a ; i++) {
+//    if ( a >= 18) {
+//       console.log("Eligible for vote");  
+//    }else{
+//       console.log("Not Eligible for vote");
+      
+//    }
+
+// let arr = [2,4,6,8,10,11,12,333]
+// for (let index = 0; index < arr.length; index++) {
+//    if (arr[index] % 2 == 0) {
+//      console.log(arr[index]);
+      
+//    }
+   
+// } 
+ 
+
+
+
+// let array = [5,10,15,20,30]
+
+// array[4]= 100
+// console.log(array);
+
+// let array = [5,10,15,20,30]
+
+// console.log(array[4]);
+
+
+
+
+// let obj = {
+//    Name : "Nathiya",
+//    age : 40,
+//    city : "trichy",
+//    course :"Full stack"
+// }
+
+// obj.StudentName = "nithiya"
+// console.log(obj);
+
+
+let arr = [
+   {
+    name: "Arun",
+    age: 22,
+    course: "JavaScript"
+   },
+
+   {
+    name: "Ajay",
+    age: 22,
+    course: "JavaScript"
+   },
+
+
+   {
+    name: "Ashok",
+    age: 22,
+    course: "JavaScript"
+   }
+]
+
+arr[2].age = 40 
+console.log(arr);
