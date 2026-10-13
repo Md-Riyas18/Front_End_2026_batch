@@ -414,3 +414,49 @@
 // console.log(img2);
 
 
+// let a = [1,2,3,4,56,6]
+
+// let b=a.some((b)=>{
+//     return b===3
+// })
+// console.log(a);
+
+// console.log(b);
+
+    
+
+
+    
+// const title = document.getElementById("title");
+// const cls = document.getElementById("para1");
+// const btns = document.getElementById("btn");
+
+// btns.addEventListener("click", () => {
+//     if (title.style.display === "none") {
+//         title.style.display = "block";
+//         cls.style.display = "block";
+//     } else {
+//         title.style.display = "none";
+//         cls.style.display = "none";
+//     }
+// });
+
+
+
+
+
+const data = []
+
+const btnadd = document.getElementById("btnadd")
+const btnsub = document.getElementById("btnsub")
+const btnmul = document.getElementById("btnmul")
+const btndiv = document.getElementById("btndiv")
+
+btnadd.addEventListener("click",()=>{
+    
+
+})
+
+
+
+
