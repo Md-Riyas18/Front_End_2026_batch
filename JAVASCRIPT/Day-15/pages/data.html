@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>js</title>
+</head>
+<body>
+    <!-- <h2>student</h2>
+    <table>
+        <thead>
+            <th>no.s</th>
+            <th>name</th>
+        </thead>
+        <tbody id="tablebody">
+    
+        </tbody>
+    </table>
+
+    <script>
+        let arr = [10 , 20 , 30 ]
+
+        const name = document.getElementById("tablebody")
+
+        let data ="";
+
+        for (let a = 0 ; a < arr.length ; a++){
+            data +=`<tr>
+                <td>${a+1}</td>
+                <td>${arr[a]}</td>
+                </tr>`;
+        }
+        name.innerHTML= data;
+
+    </script> -->
+
+
+    <h2>student</h2>
+    <table>
+        <thead>
+            <th>no</th>
+            <th>name</th>
+        </thead>
+        <tbody id="tbody">
+
+        </tbody>
+    </table>
+
+    <script>
+        let name = [10 , 20 ,30 ]
+
+        const body=document.getElementById("tbody")
+        let datas = "";
+        for (let b = 0; b < name.length ; b ++ ){
+            datas += `<tr>
+                <td>${b+1}</td>
+                <td>${name[b]}</td>
+
+                </tr>`
+
+            
+        }
+        body.innerHTML=datas;
+
+    </script>
+</body>
+</html>
