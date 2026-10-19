@@ -40,9 +40,11 @@
                 Choose one reason
             </label>
 
-            <select id="reason"
-                class="w-full border-2 border-pink-200 rounded-xl p-4 bg-pink-50 focus:outline-none focus:border-purple-400">
-
+            <select
+                id="reason"
+                required
+                class="w-full border-2 border-pink-200 rounded-xl p-4 bg-pink-50 focus:outline-none focus:border-purple-400"
+            >
                 <option value="">Select your reason 💌</option>
 
                 <option value="Because you are a good friend 💗">
@@ -64,11 +66,14 @@
                 <option value="Because I don't like you as a friend 😅">
                     Because I don't like you as a friend 😅
                 </option>
-
             </select>
 
-            <button id="reasonNextBtn" type="button" disabled
-                class="w-full mt-6 bg-gradient-to-r from-pink-500 to-purple-500 text-white font-semibold py-4 rounded-full shadow-md transition hover:scale-105 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:scale-100">
+            <button
+                id="reasonNextBtn"
+                type="button"
+                disabled
+                class="w-full mt-6 bg-gradient-to-r from-pink-500 to-purple-500 text-white font-semibold py-4 rounded-full shadow-md transition hover:scale-105 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:scale-100"
+            >
                 Next 💕
             </button>
 
@@ -81,30 +86,48 @@
                 Enna pidikum? Sollu Gayu Maa
             </label>
 
-            <textarea id="answer"
-                rows="4"
-                maxlength="50000"
+            <textarea
+                id="answer"
+                rows="8"
+                maxlength="500000"
                 required
                 placeholder="Write your answer here..."
-                class="w-full border-2 border-pink-200 rounded-xl p-4 bg-pink-50 focus:outline-none focus:border-purple-400 resize-y"></textarea>
+                class="w-full border-2 border-pink-200 rounded-xl p-4 bg-pink-50 focus:outline-none focus:border-purple-400 resize-y"
+            ></textarea>
 
-            <p class="text-sm text-gray-400 mt-2">
-                Tell me in your own words. 💌
+            <div class="flex justify-between items-center gap-2 mt-2 text-sm text-gray-500">
+                <p>Tell me in your own words. 💌</p>
+                <p id="wordCount" class="font-semibold text-purple-600 text-right">
+                    0 / 50,000 words
+                </p>
+            </div>
+
+            <p class="text-xs text-gray-400 mt-1">
+                Maximum: 50,000 words.
             </p>
 
-            <p id="statusMessage" role="status" aria-live="polite"
-                class="text-sm mt-3 text-center"></p>
+            <p
+                id="statusMessage"
+                role="status"
+                aria-live="polite"
+                class="text-sm mt-3 text-center"
+            ></p>
 
-            <button id="submitBtn" type="submit"
-                class="w-full mt-5 bg-gradient-to-r from-pink-500 to-purple-500 text-white font-semibold py-4 rounded-full shadow-md transition hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100">
+            <button
+                id="submitBtn"
+                type="submit"
+                class="w-full mt-5 bg-gradient-to-r from-pink-500 to-purple-500 text-white font-semibold py-4 rounded-full shadow-md transition hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
+            >
                 Submit 💌
             </button>
 
         </form>
 
         <!-- Thank-you message -->
-        <section id="thankYouSection"
-            class="hidden bg-pink-50 rounded-2xl p-6 mt-5">
+        <section
+            id="thankYouSection"
+            class="hidden bg-pink-50 rounded-2xl p-6 mt-5"
+        >
 
             <div class="text-5xl mb-4">🥰</div>
 
@@ -120,8 +143,11 @@
                 Thank you for sharing your thoughts!
             </p>
 
-            <button id="homeBtn" type="button"
-                class="w-full mt-6 bg-gradient-to-r from-pink-500 to-purple-500 text-white font-semibold py-4 rounded-full shadow-md">
+            <button
+                id="homeBtn"
+                type="button"
+                class="w-full mt-6 bg-gradient-to-r from-pink-500 to-purple-500 text-white font-semibold py-4 rounded-full shadow-md"
+            >
                 Back to Home 💗
             </button>
 
@@ -142,10 +168,14 @@
         const reasonSection = document.getElementById("reasonSection");
         const answerSection = document.getElementById("answerSection");
         const answer = document.getElementById("answer");
+        const wordCount = document.getElementById("wordCount");
         const thankYouSection = document.getElementById("thankYouSection");
         const submitBtn = document.getElementById("submitBtn");
         const statusMessage = document.getElementById("statusMessage");
         const homeBtn = document.getElementById("homeBtn");
+
+        const MAX_WORDS = 50000;
+        const MAX_CHARACTERS = 500000;
 
         const validReasons = [
             "Because you are a good friend 💗",
@@ -166,6 +196,35 @@
         // Read the percentage selected on percentage.html.
         const savedPercentage =
             sessionStorage.getItem("friendship_percentage");
+
+        // Count words.
+        function countWords(text) {
+            const trimmedText = text.trim();
+
+            if (!trimmedText) {
+                return 0;
+            }
+
+            return trimmedText.split(/\s+/u).length;
+        }
+
+        // Update the live word counter.
+        function updateWordCount() {
+            const words = countWords(answer.value);
+
+            wordCount.textContent =
+                `${words.toLocaleString()} / ${MAX_WORDS.toLocaleString()} words`;
+
+            if (words > MAX_WORDS) {
+                wordCount.classList.remove("text-purple-600");
+                wordCount.classList.add("text-red-600");
+            } else {
+                wordCount.classList.remove("text-red-600");
+                wordCount.classList.add("text-purple-600");
+            }
+        }
+
+        answer.addEventListener("input", updateWordCount);
 
         // Require a valid percentage before continuing.
         if (!validPercentages.includes(savedPercentage)) {
@@ -198,6 +257,7 @@
                 reasonSection.classList.add("hidden");
                 answerSection.classList.remove("hidden");
                 answer.focus();
+                updateWordCount();
             });
 
             // Save the complete response to Firestore.
@@ -209,6 +269,7 @@
                 }
 
                 const writtenAnswer = answer.value.trim();
+                const totalWords = countWords(writtenAnswer);
 
                 if (!writtenAnswer) {
                     answer.setCustomValidity(
@@ -219,9 +280,19 @@
                     return;
                 }
 
-                if (writtenAnswer.length > 5000) {
+                if (totalWords > MAX_WORDS) {
                     statusMessage.textContent =
-                        "Your answer must be 5000 characters or fewer.";
+                        "Your answer must contain 50,000 words or fewer.";
+                    statusMessage.className =
+                        "text-sm mt-3 text-center text-red-600";
+                    return;
+                }
+
+                if (writtenAnswer.length > MAX_CHARACTERS) {
+                    statusMessage.textContent =
+                        "Your answer is too long. Please shorten it.";
+                    statusMessage.className =
+                        "text-sm mt-3 text-center text-red-600";
                     return;
                 }
 
@@ -240,15 +311,18 @@
                     "text-sm mt-3 text-center text-purple-600";
 
                 try {
-                    // All complete responses go to friend_answers.
-                    
-                    const docRef = await addDoc(collection(db, "submissions"), {
-                    type: "response",
-                    percentage: savedPercentage,
-                    reason: reason.value,
-                    answer: writtenAnswer,
-                    createdAt: serverTimestamp()});
-
+                    // Save using the collection and field names
+                    // required by your existing Firestore rules.
+                    const docRef = await addDoc(
+                        collection(db, "submissions"),
+                        {
+                            type: "response",
+                            percentage: savedPercentage,
+                            reason: reason.value,
+                            answer: writtenAnswer,
+                            createdAt: serverTimestamp()
+                        }
+                    );
 
                     alreadySubmitted = true;
 
@@ -285,11 +359,25 @@
                 } catch (error) {
                     console.error("Firebase save error:", error);
 
-                    statusMessage.textContent =
-                        "Could not save your answers. Please check your internet connection and try again.";
-
                     statusMessage.className =
                         "text-sm mt-3 text-center text-red-600";
+
+                    if (
+                        error.code === "permission-denied" ||
+                        error.code === "firestore/permission-denied"
+                    ) {
+                        statusMessage.textContent =
+                            "Firebase security rules rejected this answer. Check your Firestore rules.";
+                    } else if (
+                        error.code === "resource-exhausted" ||
+                        error.message?.toLowerCase().includes("maximum size")
+                    ) {
+                        statusMessage.textContent =
+                            "This answer is too large for one Firestore document. Please shorten it.";
+                    } else {
+                        statusMessage.textContent =
+                            "Could not save your answers. Please check your internet connection and try again.";
+                    }
 
                     submitBtn.disabled = false;
                     submitBtn.textContent = "Try Again 💌";
@@ -304,6 +392,8 @@
         homeBtn.addEventListener("click", () => {
             window.location.href = "index.html";
         });
+
+        updateWordCount();
     </script>
 
 </body>
