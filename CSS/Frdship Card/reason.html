@@ -31,7 +31,7 @@
         </h1>
 
         <p class="text-gray-600 mb-8">
-            Tell me what you think, Gayu Maa! 
+            Tell me what you think, Gayu Maa!
         </p>
 
         <!-- Reason selection section -->
@@ -83,7 +83,7 @@
 
             <label for="answer"
                 class="block font-semibold text-gray-700 mb-3">
-                Enna pidikum? Sollu Gayu Maa 
+                Enna pidikum? Sollu Gayu Maa 💗
             </label>
 
             <textarea id="answer"
@@ -100,7 +100,7 @@
             <button type="submit"
                 class="w-full mt-5 bg-gradient-to-r from-pink-500 to-purple-500 text-white font-semibold py-4 rounded-full shadow-md transition hover:scale-105">
 
-                Submit 
+                Submit 💗
 
             </button>
 
@@ -121,7 +121,7 @@
             </p>
 
             <p class="text-pink-500 font-semibold mt-4">
-                Thank you for sharing your thoughts! 
+                Thank you for sharing your thoughts! 💗
             </p>
 
         </section>
@@ -136,7 +136,6 @@
         const answer = document.getElementById("answer");
         const thankYouSection = document.getElementById("thankYouSection");
 
-        // Allowed reasons.
         const validReasons = [
             "Because you are a good friend 💗",
             "Because you make me smile 😊",
@@ -145,7 +144,7 @@
             "Because I don't like you as a friend 😅"
         ];
 
-        // Read the saved submission status safely.
+        // Read the saved submission status.
         let alreadySubmitted = false;
 
         try {
@@ -156,7 +155,7 @@
             alreadySubmitted = false;
         }
 
-        // Restore the previously selected reason.
+        // Restore the saved reason.
         const savedReason = localStorage.getItem("friendship_reason");
 
         if (savedReason && validReasons.includes(savedReason)) {
@@ -164,63 +163,61 @@
             reasonNextBtn.disabled = false;
         }
 
-        // Restore the previously written answer.
+        // Restore the saved written answer.
         const savedAnswer = localStorage.getItem("friendship_answer");
 
         if (savedAnswer !== null) {
             answer.value = savedAnswer;
         }
 
-        // Display the thank-you message after submission.
+        // Display the thank-you message.
         function showThankYou() {
             reasonSection.classList.add("hidden");
             answerSection.classList.add("hidden");
             thankYouSection.classList.remove("hidden");
         }
 
-        // Display the saved submission when revisiting this page.
+        // Keep the thank-you message visible after submission.
         if (alreadySubmitted) {
             showThankYou();
         }
 
-        // Enable Next only when a valid reason is selected.
+        // Enable Next only for a valid reason.
         reason.addEventListener("change", () => {
             reasonNextBtn.disabled = !validReasons.includes(reason.value);
         });
 
-        // Move from reason selection to the written answer.
+        // Move to the written answer.
         reasonNextBtn.addEventListener("click", () => {
+
+            if (alreadySubmitted) {
+                showThankYou();
+                return;
+            }
 
             if (!validReasons.includes(reason.value)) {
                 return;
             }
 
-            // Save the selected reason.
             localStorage.setItem("friendship_reason", reason.value);
 
-            // Show the answer form.
             reasonSection.classList.add("hidden");
             answerSection.classList.remove("hidden");
 
             answer.focus();
         });
 
-        // Save the written answer when Submit is clicked.
+        // Save the completed questionnaire.
         answerSection.addEventListener("submit", (event) => {
-
-            // Prevent the browser from reloading the page.
             event.preventDefault();
 
-            // Do not allow duplicate submissions.
-            if (localStorage.getItem("friendship_submitted") === "true") {
+            if (alreadySubmitted) {
                 showThankYou();
                 return;
             }
 
-            // Remove spaces from the beginning and end.
             const writtenAnswer = answer.value.trim();
 
-            // Validate the answer.
             if (writtenAnswer === "") {
                 answer.setCustomValidity("Please write your answer first.");
                 answer.reportValidity();
@@ -228,28 +225,70 @@
                 return;
             }
 
-            // Make sure a valid reason was selected.
             if (!validReasons.includes(reason.value)) {
                 reasonSection.classList.remove("hidden");
                 answerSection.classList.add("hidden");
                 return;
             }
 
-            // Save the reason and written answer.
+            // Read existing history without deleting older entries.
+            let history = [];
+
+            try {
+                const savedHistory = JSON.parse(
+                    localStorage.getItem("friendship_history")
+                );
+
+                if (Array.isArray(savedHistory)) {
+                    history = savedHistory;
+                }
+            } catch (error) {
+                history = [];
+            }
+
+            // Get the latest selected percentage.
+            let savedPercentage = null;
+
+            try {
+                savedPercentage = JSON.parse(
+                    localStorage.getItem("friendship_percentage")
+                );
+            } catch (error) {
+                savedPercentage = null;
+            }
+
+            const submission = {
+                page: "reason",
+                percentage: savedPercentage,
+                reason: reason.value,
+                answer: writtenAnswer,
+                message: "Thanks for your time, Gayu Maa! 🥰 Your answers have been saved! 💌",
+                date: new Date().toLocaleString()
+            };
+
+            // Add this completed submission to the history.
+            history.push(submission);
+
+            localStorage.setItem(
+                "friendship_history",
+                JSON.stringify(history)
+            );
+
+            // Store the total number of completed submissions.
+            localStorage.setItem(
+                "friendship_submission_count",
+                String(history.length)
+            );
+
+            // Save the latest answers separately for easy access.
             localStorage.setItem("friendship_reason", reason.value);
+            localStorage.setItem("friendship_answer", writtenAnswer);
+            localStorage.setItem("friendship_submitted", JSON.stringify(true));
 
-            localStorage.setItem(
-                "friendship_answer",
-                writtenAnswer
-            );
+            // Prevent duplicate submissions during this questionnaire.
+            alreadySubmitted = true;
 
-            // Mark the questionnaire as submitted.
-            localStorage.setItem(
-                "friendship_submitted",
-                JSON.stringify(true)
-            );
-
-            // Hide the form and show the thank-you message.
+            // Show the thank-you message.
             showThankYou();
         });
     </script>

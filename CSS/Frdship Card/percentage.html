@@ -1,4 +1,4 @@
-```html
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,7 +11,7 @@
 
     <script>
         // If this page is refreshed, return to index.html.
-        // LocalStorage answers will remain saved.
+        // LocalStorage data will remain saved.
         const navigationEntry = performance.getEntriesByType("navigation")[0];
 
         if (navigationEntry && navigationEntry.type === "reload") {
@@ -102,6 +102,38 @@
         const nextBtn = document.getElementById("nextBtn");
         const percentageForm = document.getElementById("percentageForm");
 
+        // Save every submission without deleting previous history.
+        function saveFriendshipHistory(data) {
+            let history = [];
+
+            try {
+                const savedHistory = JSON.parse(
+                    localStorage.getItem("friendship_history")
+                );
+
+                if (Array.isArray(savedHistory)) {
+                    history = savedHistory;
+                }
+            } catch (error) {
+                history = [];
+            }
+
+            history.push({
+                ...data,
+                date: new Date().toLocaleString()
+            });
+
+            localStorage.setItem(
+                "friendship_history",
+                JSON.stringify(history)
+            );
+
+            localStorage.setItem(
+                "friendship_submission_count",
+                String(history.length)
+            );
+        }
+
         // Display the selected answer.
         function updateSelection() {
             const value = percentage.value;
@@ -138,7 +170,7 @@
             }
         }
 
-        // Restore the saved selection when the page opens.
+        // Restore the previously saved selection.
         const savedPercentage = localStorage.getItem("friendship_percentage");
 
         if (savedPercentage !== null) {
@@ -159,13 +191,11 @@
             }
         }
 
-        // Show the correct message for the restored answer.
         updateSelection();
 
-        // Update whenever the dropdown selection changes.
         percentage.addEventListener("change", updateSelection);
 
-        // Handle the form submission.
+        // Handle submission.
         percentageForm.addEventListener("submit", (event) => {
             event.preventDefault();
 
@@ -175,22 +205,24 @@
                 return;
             }
 
-            // If she is not interested, save the answer
-            // and stay on this page.
+            // Not Interested: save everything and go to thankyou.html.
             if (value === "not_interested") {
+
+                const message =
+                    "I Appreciate Your Honesty, Gayu Maa! 💗";
 
                 localStorage.setItem(
                     "friendship_percentage",
                     JSON.stringify("not_interested")
                 );
 
-                selectedValue.textContent = "😅";
+                saveFriendshipHistory({
+                    page: "percentage",
+                    percentage: "not_interested",
+                    message: message
+                });
 
-                percentageMessage.textContent =
-                    "I Appreciate Your Honesty, Gayu Maa! 💗";
-
-                nextBtn.textContent = "Thank You 💗";
-
+                window.location.href = "thankyou.html";
                 return;
             }
 
@@ -206,17 +238,23 @@
                 return;
             }
 
-            // Save the percentage.
+            // Save the latest percentage.
             localStorage.setItem(
                 "friendship_percentage",
                 JSON.stringify(number)
             );
 
-            // Only percentage selections go to Page 3.
+            // Save this submission in the complete history.
+            saveFriendshipHistory({
+                page: "percentage",
+                percentage: number,
+                message: "Thank You For Being Honest, Gayu Maa! 💗"
+            });
+
+            // Go to the reason page.
             window.location.href = "reason.html";
         });
     </script>
 
 </body>
 </html>
-```
