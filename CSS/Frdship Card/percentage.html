@@ -1,4 +1,4 @@
-
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -45,7 +45,6 @@
                 class="w-full border-2 border-pink-200 rounded-xl p-4 bg-pink-50 text-gray-700 focus:outline-none focus:border-purple-400">
 
                 <option value="">Choose an option 💌</option>
-
                 <option value="10">10%</option>
                 <option value="20">20%</option>
                 <option value="30">30%</option>
@@ -103,7 +102,7 @@
         const nextBtn = document.getElementById("nextBtn");
         const percentageForm = document.getElementById("percentageForm");
 
-        // Show the selected answer on the screen.
+        // Display the selected answer.
         function updateSelection() {
             const value = percentage.value;
 
@@ -112,8 +111,9 @@
                 selectedValue.textContent = "😅";
 
                 percentageMessage.textContent =
-                    "No worries, Gayu Maa! Your honesty matters. ";
+                    "I Appreciate Your Honesty, Gayu Maa! 💗";
 
+                nextBtn.textContent = "Thank You 💗";
                 nextBtn.disabled = false;
 
             } else if (value !== "") {
@@ -121,17 +121,19 @@
                 selectedValue.textContent = value + "%";
 
                 percentageMessage.textContent =
-                    "Thank you for being honest! ";
+                    "Thank You For Being Honest, Gayu Maa! 💗";
 
+                nextBtn.textContent = "Next 💕";
                 nextBtn.disabled = false;
 
             } else {
 
-                selectedValue.textContent = "";
+                selectedValue.textContent = "💗";
 
                 percentageMessage.textContent =
                     "Choose one option above!";
 
+                nextBtn.textContent = "Next 💕";
                 nextBtn.disabled = true;
             }
         }
@@ -157,16 +159,14 @@
             }
         }
 
-        // Update the display immediately after restoring the saved answer.
+        // Show the correct message for the restored answer.
         updateSelection();
 
-        // Update the display whenever the dropdown changes.
+        // Update whenever the dropdown selection changes.
         percentage.addEventListener("change", updateSelection);
 
-        // Save the answer and navigate to the third page.
+        // Handle the form submission.
         percentageForm.addEventListener("submit", (event) => {
-
-            // Prevent the page from reloading.
             event.preventDefault();
 
             const value = percentage.value;
@@ -175,6 +175,8 @@
                 return;
             }
 
+            // If she is not interested, save the answer
+            // and stay on this page.
             if (value === "not_interested") {
 
                 localStorage.setItem(
@@ -182,29 +184,39 @@
                     JSON.stringify("not_interested")
                 );
 
-            } else {
+                selectedValue.textContent = "😅";
 
-                const number = Number(value);
+                percentageMessage.textContent =
+                    "I Appreciate Your Honesty, Gayu Maa! 💗";
 
-                if (
-                    !Number.isInteger(number) ||
-                    number < 10 ||
-                    number > 100 ||
-                    number % 10 !== 0
-                ) {
-                    return;
-                }
+                nextBtn.textContent = "Thank You 💗";
 
-                localStorage.setItem(
-                    "friendship_percentage",
-                    JSON.stringify(number)
-                );
+                return;
             }
 
-            // Go to Page 3.
+            // Validate the selected percentage.
+            const number = Number(value);
+
+            if (
+                !Number.isInteger(number) ||
+                number < 10 ||
+                number > 100 ||
+                number % 10 !== 0
+            ) {
+                return;
+            }
+
+            // Save the percentage.
+            localStorage.setItem(
+                "friendship_percentage",
+                JSON.stringify(number)
+            );
+
+            // Only percentage selections go to Page 3.
             window.location.href = "reason.html";
         });
     </script>
 
 </body>
 </html>
+```
