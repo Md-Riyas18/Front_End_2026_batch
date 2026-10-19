@@ -1,0 +1,111 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Friendship Declaration</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <script>
+        // If this page is refreshed, return to index.html.
+        // Saved LocalStorage data will not be deleted.
+        const navigationEntry = performance.getEntriesByType("navigation")[0];
+
+        if (navigationEntry && navigationEntry.type === "reload") {
+            window.location.replace("index.html");
+        }
+    </script>
+</head>
+
+<body class="min-h-screen bg-gradient-to-br from-pink-100 via-white to-purple-100 flex items-center justify-center p-5">
+
+    <main class="w-full max-w-2xl bg-white/90 rounded-3xl shadow-xl p-7 sm:p-10 text-center border border-pink-100">
+
+        <div class="text-5xl mb-5 animate-bounce">👥</div>
+
+        <p class="text-sm uppercase tracking-[0.3em] text-pink-500 font-semibold mb-3">
+            A little something for you
+        </p>
+
+        <h1 class="text-3xl sm:text-4xl font-bold text-purple-700 mb-6">
+            A Small Friendship Declaration
+        </h1>
+
+        <!-- EDIT YOUR FRIENDSHIP DECLARATION HERE -->
+
+        <section class="bg-pink-50 rounded-2xl p-6 text-left leading-8 text-gray-700">
+
+            <p class="mb-4">Gayu Maa,</p>
+
+            <p class="mb-4">
+                Idhu Paathu Bayapudatha En Da Iven Ethu Etho Pannura Nu Ninaikatha.
+                Enaku Summa Thonuchu So Idha En Oru Webside Ha Panna Ena Nalaerukum La Nu 😅😂.
+            </p>
+
+            <p class="mb-4">
+                And Ithu Enaku Oru Memories Ha Erukum Like Nii En Kuda Anga Varanum
+                Inga Varanum Or Gift La Tharanum La Ella Da Maa.
+                Bec Athuku Vaaipe Ella Bec Of Past Ehhh So Unaku Na Ethachu Pannure
+                Means Athuvum Enaku Memories Dhan Da Maa 😌✨
+            </p>
+
+            <p class="mb-4">
+                And Idhu Summa Ena Idealogy Vaachu Panna Epadi Erukum Pannathu Avalodhan.
+                Idhu Advantage Ha Eduthupa Nu Ninacha Veliya Close Kuduthuru.
+                It's Just A Fun And Memories Dhan Enaku 🙌🏻
+            </p>
+
+            <p class="mb-4">
+                Enaku Epodhu Nii En Special Frd Ehh Dhan Gayu Maa Purithaaa Dii 😊 And I am Very Glad To Have You As A Friend ✨ Apm
+                Neriya Sollanum Dhan But Idhu La Solla Alavova Solla Mudiyadhu So Na Msg La Solluree 😂 
+            </p>
+
+            <p class="font-semibold text-pink-600">
+                With Friendship, Always! 💌
+            </p>
+
+        </section>
+
+        <!-- END OF EDITABLE DECLARATION -->
+
+        <button id="acceptBtn"
+            class="mt-7 w-full sm:w-auto bg-gradient-to-r from-pink-500 to-purple-500 text-white font-semibold px-8 py-4 rounded-full shadow-lg hover:scale-105 hover:shadow-xl transition duration-300">
+
+            Gayu Maa Accept the Declaration 
+
+        </button>
+
+        <p class="text-xs text-gray-400 mt-5">
+            Made with friendship and a little bit of magic ✨
+        </p>
+
+    </main>
+
+    <script>
+        const acceptBtn = document.getElementById("acceptBtn");
+
+        acceptBtn.addEventListener("click", () => {
+
+            // Clear previous questionnaire answers to start again.
+            localStorage.removeItem("friendship_percentage");
+            localStorage.removeItem("friendship_reason");
+            localStorage.removeItem("friendship_answer");
+            localStorage.removeItem("friendship_submitted");
+
+            // Save the declaration acceptance.
+            localStorage.setItem(
+                "friendship_accepted",
+                JSON.stringify(true)
+            );
+
+            // Navigate to the percentage page.
+            window.location.href = "percentage.html";
+
+        });
+    </script>
+
+</body>
+</html>

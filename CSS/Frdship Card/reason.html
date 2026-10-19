@@ -1,0 +1,258 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Why Do You Like Me As A Friend?</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <script>
+        // If this page is refreshed, return to index.html.
+        // LocalStorage data will remain saved.
+        const navigationEntry = performance.getEntriesByType("navigation")[0];
+
+        if (navigationEntry && navigationEntry.type === "reload") {
+            window.location.replace("index.html");
+        }
+    </script>
+</head>
+
+<body class="min-h-screen bg-gradient-to-br from-pink-100 via-white to-purple-100 flex items-center justify-center p-5">
+
+    <main class="w-full max-w-xl bg-white rounded-3xl shadow-xl p-7 sm:p-10 text-center">
+
+        <div class="text-5xl mb-5">🥺</div>
+
+        <h1 class="text-3xl font-bold text-purple-700 mb-4">
+            Why Should You Like Me?
+        </h1>
+
+        <p class="text-gray-600 mb-8">
+            Tell me what you think, Gayu Maa! 
+        </p>
+
+        <!-- Reason selection section -->
+        <section id="reasonSection" class="text-left">
+
+            <label for="reason"
+                class="block font-semibold text-gray-700 mb-3">
+                Choose one reason
+            </label>
+
+            <select id="reason"
+                class="w-full border-2 border-pink-200 rounded-xl p-4 bg-pink-50 focus:outline-none focus:border-purple-400">
+
+                <option value="">Select your reason 💌</option>
+
+                <option value="Because you are a good friend 💗">
+                    Because you are a good friend 💗
+                </option>
+
+                <option value="Because you make me smile 😊">
+                    Because you make me smile 😊
+                </option>
+
+                <option value="Because you care about me 🫶">
+                    Because you care about me 🫶
+                </option>
+
+                <option value="Because you are funny 😂">
+                    Because you are funny 😂
+                </option>
+
+                <option value="Because I don't like you as a friend 😅">
+                    Because I don't like you as a friend 😅
+                </option>
+
+            </select>
+
+            <button id="reasonNextBtn" type="button" disabled
+                class="w-full mt-6 bg-gradient-to-r from-pink-500 to-purple-500 text-white font-semibold py-4 rounded-full shadow-md transition hover:scale-105 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:scale-100">
+
+                Next 💕
+
+            </button>
+
+        </section>
+
+        <!-- Written answer section -->
+        <form id="answerSection" class="hidden text-left">
+
+            <label for="answer"
+                class="block font-semibold text-gray-700 mb-3">
+                Enna pidikum? Sollu Gayu Maa 
+            </label>
+
+            <textarea id="answer"
+                rows="4"
+                maxlength="1000"
+                required
+                placeholder="Write your answer here..."
+                class="w-full border-2 border-pink-200 rounded-xl p-4 bg-pink-50 focus:outline-none focus:border-purple-400 resize-y"></textarea>
+
+            <p class="text-sm text-gray-400 mt-2">
+                Tell me in your own words. 💌
+            </p>
+
+            <button type="submit"
+                class="w-full mt-5 bg-gradient-to-r from-pink-500 to-purple-500 text-white font-semibold py-4 rounded-full shadow-md transition hover:scale-105">
+
+                Submit 
+
+            </button>
+
+        </form>
+
+        <!-- Thank-you message -->
+        <section id="thankYouSection"
+            class="hidden bg-pink-50 rounded-2xl p-6 mt-5">
+
+            <div class="text-5xl mb-4">🥰</div>
+
+            <h2 class="text-2xl font-bold text-purple-700 mb-4">
+                Thanks for your time, Gayu Maa! 🥰
+            </h2>
+
+            <p class="text-gray-600">
+                Your friendship answers have been saved successfully! 💌
+            </p>
+
+            <p class="text-pink-500 font-semibold mt-4">
+                Thank you for sharing your thoughts! 
+            </p>
+
+        </section>
+
+    </main>
+
+    <script>
+        const reason = document.getElementById("reason");
+        const reasonNextBtn = document.getElementById("reasonNextBtn");
+        const reasonSection = document.getElementById("reasonSection");
+        const answerSection = document.getElementById("answerSection");
+        const answer = document.getElementById("answer");
+        const thankYouSection = document.getElementById("thankYouSection");
+
+        // Allowed reasons.
+        const validReasons = [
+            "Because you are a good friend 💗",
+            "Because you make me smile 😊",
+            "Because you care about me 🫶",
+            "Because you are funny 😂",
+            "Because I don't like you as a friend 😅"
+        ];
+
+        // Read the saved submission status safely.
+        let alreadySubmitted = false;
+
+        try {
+            alreadySubmitted = JSON.parse(
+                localStorage.getItem("friendship_submitted") || "false"
+            ) === true;
+        } catch (error) {
+            alreadySubmitted = false;
+        }
+
+        // Restore the previously selected reason.
+        const savedReason = localStorage.getItem("friendship_reason");
+
+        if (savedReason && validReasons.includes(savedReason)) {
+            reason.value = savedReason;
+            reasonNextBtn.disabled = false;
+        }
+
+        // Restore the previously written answer.
+        const savedAnswer = localStorage.getItem("friendship_answer");
+
+        if (savedAnswer !== null) {
+            answer.value = savedAnswer;
+        }
+
+        // Display the thank-you message after submission.
+        function showThankYou() {
+            reasonSection.classList.add("hidden");
+            answerSection.classList.add("hidden");
+            thankYouSection.classList.remove("hidden");
+        }
+
+        // Display the saved submission when revisiting this page.
+        if (alreadySubmitted) {
+            showThankYou();
+        }
+
+        // Enable Next only when a valid reason is selected.
+        reason.addEventListener("change", () => {
+            reasonNextBtn.disabled = !validReasons.includes(reason.value);
+        });
+
+        // Move from reason selection to the written answer.
+        reasonNextBtn.addEventListener("click", () => {
+
+            if (!validReasons.includes(reason.value)) {
+                return;
+            }
+
+            // Save the selected reason.
+            localStorage.setItem("friendship_reason", reason.value);
+
+            // Show the answer form.
+            reasonSection.classList.add("hidden");
+            answerSection.classList.remove("hidden");
+
+            answer.focus();
+        });
+
+        // Save the written answer when Submit is clicked.
+        answerSection.addEventListener("submit", (event) => {
+
+            // Prevent the browser from reloading the page.
+            event.preventDefault();
+
+            // Do not allow duplicate submissions.
+            if (localStorage.getItem("friendship_submitted") === "true") {
+                showThankYou();
+                return;
+            }
+
+            // Remove spaces from the beginning and end.
+            const writtenAnswer = answer.value.trim();
+
+            // Validate the answer.
+            if (writtenAnswer === "") {
+                answer.setCustomValidity("Please write your answer first.");
+                answer.reportValidity();
+                answer.setCustomValidity("");
+                return;
+            }
+
+            // Make sure a valid reason was selected.
+            if (!validReasons.includes(reason.value)) {
+                reasonSection.classList.remove("hidden");
+                answerSection.classList.add("hidden");
+                return;
+            }
+
+            // Save the reason and written answer.
+            localStorage.setItem("friendship_reason", reason.value);
+
+            localStorage.setItem(
+                "friendship_answer",
+                writtenAnswer
+            );
+
+            // Mark the questionnaire as submitted.
+            localStorage.setItem(
+                "friendship_submitted",
+                JSON.stringify(true)
+            );
+
+            // Hide the form and show the thank-you message.
+            showThankYou();
+        });
+    </script>
+
+</body>
+</html>

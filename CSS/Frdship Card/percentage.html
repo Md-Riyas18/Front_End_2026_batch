@@ -1,0 +1,210 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Friendship Percentage</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <script>
+        // If this page is refreshed, return to index.html.
+        // LocalStorage answers will remain saved.
+        const navigationEntry = performance.getEntriesByType("navigation")[0];
+
+        if (navigationEntry && navigationEntry.type === "reload") {
+            window.location.replace("index.html");
+        }
+    </script>
+</head>
+
+<body class="min-h-screen bg-gradient-to-br from-purple-100 via-white to-pink-100 flex items-center justify-center p-5">
+
+    <main class="w-full max-w-xl bg-white rounded-3xl shadow-xl p-7 sm:p-10 text-center">
+
+        <div class="text-5xl mb-5">🥹</div>
+
+        <h1 class="text-3xl font-bold text-purple-700 mb-4">
+            How Much Do You Like Me?
+        </h1>
+
+        <p class="text-gray-600 mb-8">
+            Gayu Maa, how much do you like me as a friend? 🥹
+        </p>
+
+        <form id="percentageForm">
+
+            <label for="percentage"
+                class="block text-left font-semibold text-gray-700 mb-3">
+                Select your friendship percentage
+            </label>
+
+            <select id="percentage" required
+                class="w-full border-2 border-pink-200 rounded-xl p-4 bg-pink-50 text-gray-700 focus:outline-none focus:border-purple-400">
+
+                <option value="">Choose an option 💌</option>
+
+                <option value="10">10%</option>
+                <option value="20">20%</option>
+                <option value="30">30%</option>
+                <option value="40">40%</option>
+                <option value="50">50%</option>
+                <option value="60">60%</option>
+                <option value="70">70%</option>
+                <option value="80">80%</option>
+                <option value="90">90%</option>
+                <option value="100">100%</option>
+
+                <option value="not_interested">
+                    Sorry, Not Interested 😅
+                </option>
+
+            </select>
+
+            <div class="my-8 bg-purple-50 rounded-2xl p-6">
+
+                <p class="text-gray-500 mb-2">
+                    Your selected answer
+                </p>
+
+                <p id="selectedValue"
+                    class="text-4xl sm:text-5xl font-bold text-pink-500">
+                    💗
+                </p>
+
+                <p id="percentageMessage"
+                    class="text-sm text-purple-600 mt-3">
+                    Choose one option above!
+                </p>
+
+            </div>
+
+            <button id="nextBtn" type="submit" disabled
+                class="w-full bg-gradient-to-r from-pink-500 to-purple-500 text-white font-semibold py-4 rounded-full shadow-md transition hover:scale-105 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:scale-100">
+
+                Next 💕
+
+            </button>
+
+        </form>
+
+        <p class="text-sm text-gray-400 mt-6">
+            Your honest answer is always okay. 🌷
+        </p>
+
+    </main>
+
+    <script>
+        const percentage = document.getElementById("percentage");
+        const selectedValue = document.getElementById("selectedValue");
+        const percentageMessage = document.getElementById("percentageMessage");
+        const nextBtn = document.getElementById("nextBtn");
+        const percentageForm = document.getElementById("percentageForm");
+
+        // Show the selected answer on the screen.
+        function updateSelection() {
+            const value = percentage.value;
+
+            if (value === "not_interested") {
+
+                selectedValue.textContent = "😅";
+
+                percentageMessage.textContent =
+                    "No worries, Gayu Maa! Your honesty matters. ";
+
+                nextBtn.disabled = false;
+
+            } else if (value !== "") {
+
+                selectedValue.textContent = value + "%";
+
+                percentageMessage.textContent =
+                    "Thank you for being honest! ";
+
+                nextBtn.disabled = false;
+
+            } else {
+
+                selectedValue.textContent = "";
+
+                percentageMessage.textContent =
+                    "Choose one option above!";
+
+                nextBtn.disabled = true;
+            }
+        }
+
+        // Restore the saved selection when the page opens.
+        const savedPercentage = localStorage.getItem("friendship_percentage");
+
+        if (savedPercentage !== null) {
+            try {
+                const savedValue = JSON.parse(savedPercentage);
+
+                const validPercentage =
+                    Number.isInteger(savedValue) &&
+                    savedValue >= 10 &&
+                    savedValue <= 100 &&
+                    savedValue % 10 === 0;
+
+                if (savedValue === "not_interested" || validPercentage) {
+                    percentage.value = String(savedValue);
+                }
+            } catch (error) {
+                percentage.value = "";
+            }
+        }
+
+        // Update the display immediately after restoring the saved answer.
+        updateSelection();
+
+        // Update the display whenever the dropdown changes.
+        percentage.addEventListener("change", updateSelection);
+
+        // Save the answer and navigate to the third page.
+        percentageForm.addEventListener("submit", (event) => {
+
+            // Prevent the page from reloading.
+            event.preventDefault();
+
+            const value = percentage.value;
+
+            if (value === "") {
+                return;
+            }
+
+            if (value === "not_interested") {
+
+                localStorage.setItem(
+                    "friendship_percentage",
+                    JSON.stringify("not_interested")
+                );
+
+            } else {
+
+                const number = Number(value);
+
+                if (
+                    !Number.isInteger(number) ||
+                    number < 10 ||
+                    number > 100 ||
+                    number % 10 !== 0
+                ) {
+                    return;
+                }
+
+                localStorage.setItem(
+                    "friendship_percentage",
+                    JSON.stringify(number)
+                );
+            }
+
+            // Go to Page 3.
+            window.location.href = "reason.html";
+        });
+    </script>
+
+</body>
+</html>
