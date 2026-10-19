@@ -10,8 +10,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
     <script>
-        // If this page is refreshed, return to index.html.
-        // LocalStorage data will remain saved.
+        // Return to index.html if this page is refreshed.
         const navigationEntry = performance.getEntriesByType("navigation")[0];
 
         if (navigationEntry && navigationEntry.type === "reload") {
@@ -34,11 +33,10 @@
             Tell me what you think, Gayu Maa!
         </p>
 
-        <!-- Reason selection section -->
+        <!-- Reason selection -->
         <section id="reasonSection" class="text-left">
 
-            <label for="reason"
-                class="block font-semibold text-gray-700 mb-3">
+            <label for="reason" class="block font-semibold text-gray-700 mb-3">
                 Choose one reason
             </label>
 
@@ -71,24 +69,21 @@
 
             <button id="reasonNextBtn" type="button" disabled
                 class="w-full mt-6 bg-gradient-to-r from-pink-500 to-purple-500 text-white font-semibold py-4 rounded-full shadow-md transition hover:scale-105 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:scale-100">
-
                 Next 💕
-
             </button>
 
         </section>
 
-        <!-- Written answer section -->
+        <!-- Written answer -->
         <form id="answerSection" class="hidden text-left">
 
-            <label for="answer"
-                class="block font-semibold text-gray-700 mb-3">
-                Enna pidikum? Sollu Gayu Maa 
+            <label for="answer" class="block font-semibold text-gray-700 mb-3">
+                Enna pidikum? Sollu Gayu Maa
             </label>
 
             <textarea id="answer"
                 rows="4"
-                maxlength="1000"
+                maxlength="5000"
                 required
                 placeholder="Write your answer here..."
                 class="w-full border-2 border-pink-200 rounded-xl p-4 bg-pink-50 focus:outline-none focus:border-purple-400 resize-y"></textarea>
@@ -97,11 +92,12 @@
                 Tell me in your own words. 💌
             </p>
 
-            <button type="submit"
-                class="w-full mt-5 bg-gradient-to-r from-pink-500 to-purple-500 text-white font-semibold py-4 rounded-full shadow-md transition hover:scale-105">
+            <p id="statusMessage" role="status" aria-live="polite"
+                class="text-sm mt-3 text-center"></p>
 
-                Submit 
-
+            <button id="submitBtn" type="submit"
+                class="w-full mt-5 bg-gradient-to-r from-pink-500 to-purple-500 text-white font-semibold py-4 rounded-full shadow-md transition hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100">
+                Submit 💌
             </button>
 
         </form>
@@ -121,20 +117,35 @@
             </p>
 
             <p class="text-pink-500 font-semibold mt-4">
-                Thank you for sharing your thoughts! 
+                Thank you for sharing your thoughts!
             </p>
+
+            <button id="homeBtn" type="button"
+                class="w-full mt-6 bg-gradient-to-r from-pink-500 to-purple-500 text-white font-semibold py-4 rounded-full shadow-md">
+                Back to Home 💗
+            </button>
 
         </section>
 
     </main>
 
-    <script>
+    <script type="module">
+        import {
+            db,
+            collection,
+            addDoc,
+            serverTimestamp
+        } from "./firebase.js";
+
         const reason = document.getElementById("reason");
         const reasonNextBtn = document.getElementById("reasonNextBtn");
         const reasonSection = document.getElementById("reasonSection");
         const answerSection = document.getElementById("answerSection");
         const answer = document.getElementById("answer");
         const thankYouSection = document.getElementById("thankYouSection");
+        const submitBtn = document.getElementById("submitBtn");
+        const statusMessage = document.getElementById("statusMessage");
+        const homeBtn = document.getElementById("homeBtn");
 
         const validReasons = [
             "Because you are a good friend 💗",
@@ -144,152 +155,154 @@
             "Because I don't like you as a friend 😅"
         ];
 
-        // Read the saved submission status.
+        const validPercentages = [
+            "10", "20", "30", "40", "50",
+            "60", "70", "80", "90", "100"
+        ];
+
+        let isSaving = false;
         let alreadySubmitted = false;
 
-        try {
-            alreadySubmitted = JSON.parse(
-                localStorage.getItem("friendship_submitted") || "false"
-            ) === true;
-        } catch (error) {
-            alreadySubmitted = false;
-        }
+        // Read the percentage selected on percentage.html.
+        const savedPercentage =
+            sessionStorage.getItem("friendship_percentage");
 
-        // Restore the saved reason.
-        const savedReason = localStorage.getItem("friendship_reason");
-
-        if (savedReason && validReasons.includes(savedReason)) {
-            reason.value = savedReason;
-            reasonNextBtn.disabled = false;
-        }
-
-        // Restore the saved written answer.
-        const savedAnswer = localStorage.getItem("friendship_answer");
-
-        if (savedAnswer !== null) {
-            answer.value = savedAnswer;
-        }
-
-        // Display the thank-you message.
-        function showThankYou() {
+        // Require a valid percentage before continuing.
+        if (!validPercentages.includes(savedPercentage)) {
             reasonSection.classList.add("hidden");
             answerSection.classList.add("hidden");
-            thankYouSection.classList.remove("hidden");
-        }
 
-        // Keep the thank-you message visible after submission.
-        if (alreadySubmitted) {
-            showThankYou();
-        }
+            statusMessage.textContent =
+                "Please select a percentage first. Returning to the first page...";
 
-        // Enable Next only for a valid reason.
-        reason.addEventListener("change", () => {
-            reasonNextBtn.disabled = !validReasons.includes(reason.value);
-        });
+            statusMessage.classList.add("text-red-600");
 
-        // Move to the written answer.
-        reasonNextBtn.addEventListener("click", () => {
+            setTimeout(() => {
+                window.location.replace("index.html");
+            }, 1800);
 
-            if (alreadySubmitted) {
-                showThankYou();
-                return;
-            }
+        } else {
 
-            if (!validReasons.includes(reason.value)) {
-                return;
-            }
+            // Enable Next only when a valid reason is selected.
+            reason.addEventListener("change", () => {
+                reasonNextBtn.disabled =
+                    !validReasons.includes(reason.value);
+            });
 
-            localStorage.setItem("friendship_reason", reason.value);
-
-            reasonSection.classList.add("hidden");
-            answerSection.classList.remove("hidden");
-
-            answer.focus();
-        });
-
-        // Save the completed questionnaire.
-        answerSection.addEventListener("submit", (event) => {
-            event.preventDefault();
-
-            if (alreadySubmitted) {
-                showThankYou();
-                return;
-            }
-
-            const writtenAnswer = answer.value.trim();
-
-            if (writtenAnswer === "") {
-                answer.setCustomValidity("Please write your answer first.");
-                answer.reportValidity();
-                answer.setCustomValidity("");
-                return;
-            }
-
-            if (!validReasons.includes(reason.value)) {
-                reasonSection.classList.remove("hidden");
-                answerSection.classList.add("hidden");
-                return;
-            }
-
-            // Read existing history without deleting older entries.
-            let history = [];
-
-            try {
-                const savedHistory = JSON.parse(
-                    localStorage.getItem("friendship_history")
-                );
-
-                if (Array.isArray(savedHistory)) {
-                    history = savedHistory;
+            // Show the written-answer form.
+            reasonNextBtn.addEventListener("click", () => {
+                if (!validReasons.includes(reason.value)) {
+                    return;
                 }
-            } catch (error) {
-                history = [];
-            }
 
-            // Get the latest selected percentage.
-            let savedPercentage = null;
+                reasonSection.classList.add("hidden");
+                answerSection.classList.remove("hidden");
+                answer.focus();
+            });
 
-            try {
-                savedPercentage = JSON.parse(
-                    localStorage.getItem("friendship_percentage")
-                );
-            } catch (error) {
-                savedPercentage = null;
-            }
+            // Save the complete response to Firestore.
+            answerSection.addEventListener("submit", async (event) => {
+                event.preventDefault();
 
-            const submission = {
-                page: "reason",
-                percentage: savedPercentage,
-                reason: reason.value,
-                answer: writtenAnswer,
-                message: "Thanks for your time, Gayu Maa! 🥰 Your answers have been saved! 💌",
-                date: new Date().toLocaleString()
-            };
+                if (isSaving || alreadySubmitted) {
+                    return;
+                }
 
-            // Add this completed submission to the history.
-            history.push(submission);
+                const writtenAnswer = answer.value.trim();
 
-            localStorage.setItem(
-                "friendship_history",
-                JSON.stringify(history)
-            );
+                if (!writtenAnswer) {
+                    answer.setCustomValidity(
+                        "Please write your answer first."
+                    );
+                    answer.reportValidity();
+                    answer.setCustomValidity("");
+                    return;
+                }
 
-            // Store the total number of completed submissions.
-            localStorage.setItem(
-                "friendship_submission_count",
-                String(history.length)
-            );
+                if (writtenAnswer.length > 5000) {
+                    statusMessage.textContent =
+                        "Your answer must be 5000 characters or fewer.";
+                    return;
+                }
 
-            // Save the latest answers separately for easy access.
-            localStorage.setItem("friendship_reason", reason.value);
-            localStorage.setItem("friendship_answer", writtenAnswer);
-            localStorage.setItem("friendship_submitted", JSON.stringify(true));
+                if (!validReasons.includes(reason.value)) {
+                    reasonSection.classList.remove("hidden");
+                    answerSection.classList.add("hidden");
+                    return;
+                }
 
-            // Prevent duplicate submissions during this questionnaire.
-            alreadySubmitted = true;
+                isSaving = true;
+                submitBtn.disabled = true;
+                submitBtn.textContent = "Saving... 💌";
 
-            // Show the thank-you message.
-            showThankYou();
+                statusMessage.textContent = "Saving your answers...";
+                statusMessage.className =
+                    "text-sm mt-3 text-center text-purple-600";
+
+                try {
+                    // All complete responses go to friend_answers.
+                    
+                    const docRef = await addDoc(collection(db, "submissions"), {
+                    type: "response",
+                    percentage: savedPercentage,
+                    reason: reason.value,
+                    answer: writtenAnswer,
+                    createdAt: serverTimestamp()});
+
+
+                    alreadySubmitted = true;
+
+                    // Store the document ID for reference.
+                    sessionStorage.setItem(
+                        "friendship_submission_id",
+                        docRef.id
+                    );
+
+                    // Optional local copy on this device.
+                    localStorage.setItem(
+                        "friendship_percentage",
+                        JSON.stringify(savedPercentage)
+                    );
+
+                    localStorage.setItem(
+                        "friendship_reason",
+                        reason.value
+                    );
+
+                    localStorage.setItem(
+                        "friendship_answer",
+                        writtenAnswer
+                    );
+
+                    localStorage.setItem(
+                        "friendship_submitted",
+                        "true"
+                    );
+
+                    answerSection.classList.add("hidden");
+                    thankYouSection.classList.remove("hidden");
+
+                } catch (error) {
+                    console.error("Firebase save error:", error);
+
+                    statusMessage.textContent =
+                        "Could not save your answers. Please check your internet connection and try again.";
+
+                    statusMessage.className =
+                        "text-sm mt-3 text-center text-red-600";
+
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = "Try Again 💌";
+
+                } finally {
+                    isSaving = false;
+                }
+            });
+        }
+
+        // Return to the home page.
+        homeBtn.addEventListener("click", () => {
+            window.location.href = "index.html";
         });
     </script>
 

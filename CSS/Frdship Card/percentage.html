@@ -1,258 +1,222 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Friendship Percentage 💗</title>
 
-    <title>Friendship Percentage</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-
-    <script>
-        // If this page is refreshed, return to index.html.
-        // LocalStorage data will remain saved.
-        const navigationEntry = performance.getEntriesByType("navigation")[0];
-
-        if (navigationEntry && navigationEntry.type === "reload") {
-            window.location.replace("index.html");
+    <style>
+        body {
+            background: linear-gradient(135deg, #fff1f7, #f5edff);
+            min-height: 100vh;
         }
-    </script>
+
+        .card {
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        .gradient-button {
+            background: linear-gradient(90deg, #f42ca0, #ae35ff);
+            transition: transform 0.2s, opacity 0.2s;
+        }
+
+        .gradient-button:hover:not(:disabled) {
+            transform: translateY(-2px);
+        }
+
+        .gradient-button:disabled {
+            opacity: 0.55;
+            cursor: not-allowed;
+        }
+    </style>
 </head>
 
-<body class="min-h-screen bg-gradient-to-br from-purple-100 via-white to-pink-100 flex items-center justify-center p-5">
+<body class="flex items-center justify-center p-5">
 
-    <main class="w-full max-w-xl bg-white rounded-3xl shadow-xl p-7 sm:p-10 text-center">
+    <main class="card w-full max-w-xl rounded-3xl bg-white p-8 sm:p-10 text-center">
 
-        <div class="text-5xl mb-5">🥹</div>
+        <div class="mb-4 text-5xl">💗</div>
 
-        <h1 class="text-3xl font-bold text-purple-700 mb-4">
+        <h1 class="mb-3 text-3xl font-bold text-purple-700">
             How Much Do You Like Me?
         </h1>
 
-        <p class="text-gray-600 mb-8">
-            Gayu Maa, how much do you like me as a friend? 🥹
+        <p class="mb-8 text-gray-600">
+            Be honest with me, Gayu Maa! 🥹
         </p>
 
-        <form id="percentageForm">
+        <form id="percentageForm" class="text-left">
 
-            <label for="percentage"
-                class="block text-left font-semibold text-gray-700 mb-3">
-                Select your friendship percentage
+            <label for="percentage" class="mb-3 block font-semibold text-gray-700">
+                Choose your friendship percentage
             </label>
 
-            <select id="percentage" required
-                class="w-full border-2 border-pink-200 rounded-xl p-4 bg-pink-50 text-gray-700 focus:outline-none focus:border-purple-400">
-
-                <option value="">Choose an option 💌</option>
-                <option value="10">10%</option>
-                <option value="20">20%</option>
-                <option value="30">30%</option>
-                <option value="40">40%</option>
-                <option value="50">50%</option>
-                <option value="60">60%</option>
-                <option value="70">70%</option>
-                <option value="80">80%</option>
-                <option value="90">90%</option>
-                <option value="100">100%</option>
-
-                <option value="not_interested">
-                    Sorry, Not Interested 😅
-                </option>
-
+            <select
+                id="percentage"
+                required
+                class="w-full rounded-xl border-2 border-pink-200 bg-pink-50 p-4 outline-none focus:border-purple-400"
+            >
+                <option value="">Select your answer 💕</option>
+                <option value="10">10% 💗</option>
+                <option value="20">20% 💕</option>
+                <option value="30">30% 😊</option>
+                <option value="40">40% 🥰</option>
+                <option value="50">50% 💖</option>
+                <option value="60">60% 💞</option>
+                <option value="70">70% 💓</option>
+                <option value="80">80% 💝</option>
+                <option value="90">90% 💘</option>
+                <option value="100">100% — Best Friends Forever! 💗</option>
+                <option value="not_interested">I'm not interested 😅</option>
             </select>
 
-            <div class="my-8 bg-purple-50 rounded-2xl p-6">
+            <div class="py-7 text-center">
+                <div id="selectedValue" class="text-4xl font-bold text-pink-500"></div>
 
-                <p class="text-gray-500 mb-2">
-                    Your selected answer
-                </p>
-
-                <p id="selectedValue"
-                    class="text-4xl sm:text-5xl font-bold text-pink-500">
-    
-                </p>
-
-                <p id="percentageMessage"
-                    class="text-sm text-purple-600 mt-3">
+                <p id="percentageMessage" class="mt-3 text-purple-700">
                     Choose one option above!
                 </p>
-
             </div>
 
-            <button id="nextBtn" type="submit" disabled
-                class="w-full bg-gradient-to-r from-pink-500 to-purple-500 text-white font-semibold py-4 rounded-full shadow-md transition hover:scale-105 disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:scale-100">
+            <p
+                id="statusMessage"
+                role="status"
+                aria-live="polite"
+                class="mb-4 text-center text-sm text-red-600"
+            ></p>
 
+            <button
+                id="nextBtn"
+                type="submit"
+                disabled
+                class="gradient-button w-full rounded-full px-6 py-4 font-bold text-white shadow-md"
+            >
                 Next 💕
-
             </button>
 
         </form>
-
-        <p class="text-sm text-gray-400 mt-6">
-            Your honest answer is always okay. 🌷
-        </p>
-
     </main>
 
-    <script>
+    <script type="module">
+        import {
+            db,
+            collection,
+            addDoc,
+            serverTimestamp
+        } from "./firebase.js";
+
         const percentage = document.getElementById("percentage");
         const selectedValue = document.getElementById("selectedValue");
         const percentageMessage = document.getElementById("percentageMessage");
         const nextBtn = document.getElementById("nextBtn");
         const percentageForm = document.getElementById("percentageForm");
+        const statusMessage = document.getElementById("statusMessage");
 
-        // Save every submission without deleting previous history.
-        function saveFriendshipHistory(data) {
-            let history = [];
-
-            try {
-                const savedHistory = JSON.parse(
-                    localStorage.getItem("friendship_history")
-                );
-
-                if (Array.isArray(savedHistory)) {
-                    history = savedHistory;
-                }
-            } catch (error) {
-                history = [];
-            }
-
-            history.push({
-                ...data,
-                date: new Date().toLocaleString()
-            });
-
-            localStorage.setItem(
-                "friendship_history",
-                JSON.stringify(history)
-            );
-
-            localStorage.setItem(
-                "friendship_submission_count",
-                String(history.length)
-            );
-        }
-
-        // Display the selected answer.
         function updateSelection() {
             const value = percentage.value;
 
+            statusMessage.textContent = "";
+
             if (value === "not_interested") {
-
                 selectedValue.textContent = "😅";
-
                 percentageMessage.textContent =
-                    "I Appreciate Your Honesty, Gayu Maa! ";
-
-                nextBtn.textContent = "Thank You ";
+                    "I Appreciate Your Honesty, Gayu Maa!";
+                nextBtn.textContent = "Thank You 💗";
                 nextBtn.disabled = false;
 
             } else if (value !== "") {
-
                 selectedValue.textContent = value + "%";
-
                 percentageMessage.textContent =
-                    "Thank You For Being Honest, Gayu Maa! ";
-
+                    "Thank You For Being Honest, Gayu Maa!";
                 nextBtn.textContent = "Next 💕";
                 nextBtn.disabled = false;
 
             } else {
-
                 selectedValue.textContent = "";
-
-                percentageMessage.textContent =
-                    "Choose one option above!";
-
+                percentageMessage.textContent = "Choose one option above!";
                 nextBtn.textContent = "Next 💕";
                 nextBtn.disabled = true;
             }
         }
 
-        // Restore the previously saved selection.
-        const savedPercentage = localStorage.getItem("friendship_percentage");
-
-        if (savedPercentage !== null) {
-            try {
-                const savedValue = JSON.parse(savedPercentage);
-
-                const validPercentage =
-                    Number.isInteger(savedValue) &&
-                    savedValue >= 10 &&
-                    savedValue <= 100 &&
-                    savedValue % 10 === 0;
-
-                if (savedValue === "not_interested" || validPercentage) {
-                    percentage.value = String(savedValue);
-                }
-            } catch (error) {
-                percentage.value = "";
-            }
-        }
-
-        updateSelection();
-
         percentage.addEventListener("change", updateSelection);
 
-        // Handle submission.
-        percentageForm.addEventListener("submit", (event) => {
+        percentageForm.addEventListener("submit", async (event) => {
             event.preventDefault();
 
             const value = percentage.value;
 
-            if (value === "") {
-                return;
-            }
+            if (!value) return;
 
-            // Not Interested: save everything and go to thankyou.html.
-            if (value === "not_interested") {
+            nextBtn.disabled = true;
+            statusMessage.className = "mb-4 text-center text-sm text-gray-600";
+            statusMessage.textContent = "Please wait...";
 
-                const message =
-                    "I Appreciate Your Honesty, Gayu Maa! 💗";
+            try {
+                if (value === "not_interested") {
+                    await addDoc(collection(db, "submissions"), {
+                        type: "not_interested",
+                        percentage: "not_interested",
+                        reason: "",
+                        answer: "",
+                        createdAt: serverTimestamp()
+                    });
+
+                    localStorage.setItem(
+                        "friendship_percentage",
+                        JSON.stringify("not_interested")
+                    );
+
+                    window.location.href = "thankyou.html";
+                    return;
+                }
+
+                const number = Number(value);
+
+                if (
+                    !Number.isInteger(number) ||
+                    number < 10 ||
+                    number > 100 ||
+                    number % 10 !== 0
+                ) {
+                    throw new Error("Please select a valid percentage.");
+                }
+
+                sessionStorage.setItem(
+                    "friendship_percentage",
+                    String(number)
+                );
 
                 localStorage.setItem(
                     "friendship_percentage",
-                    JSON.stringify("not_interested")
+                    JSON.stringify(number)
                 );
 
-                saveFriendshipHistory({
-                    page: "percentage",
-                    percentage: "not_interested",
-                    message: message
-                });
+                window.location.href = "reason.html";
 
-                window.location.href = "thankyou.html";
-                return;
+            } catch (error) {
+                console.error("Firebase submission error:", error);
+
+                statusMessage.className =
+                    "mb-4 text-center text-sm text-red-600";
+
+                if (error.code === "permission-denied" ||
+                    error.code === "firestore/permission-denied") {
+                    statusMessage.textContent =
+                        "Firebase blocked this save because of its security rules.";
+                } else {
+                    statusMessage.textContent =
+                        "Could not save your answer. Please check your connection and try again.";
+                }
+
+                nextBtn.disabled = false;
             }
-
-            // Validate the selected percentage.
-            const number = Number(value);
-
-            if (
-                !Number.isInteger(number) ||
-                number < 10 ||
-                number > 100 ||
-                number % 10 !== 0
-            ) {
-                return;
-            }
-
-            // Save the latest percentage.
-            localStorage.setItem(
-                "friendship_percentage",
-                JSON.stringify(number)
-            );
-
-            // Save this submission in the complete history.
-            saveFriendshipHistory({
-                page: "percentage",
-                percentage: number,
-                message: "Thank You For Being Honest, Gayu Maa! 💗"
-            });
-
-            // Go to the reason page.
-            window.location.href = "reason.html";
         });
+
+        updateSelection();
     </script>
 
 </body>
