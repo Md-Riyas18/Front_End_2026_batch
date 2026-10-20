@@ -1,0 +1,58 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+
+</head>
+<body>
+
+    <header>
+        <h2>Dashboard</h2>
+        <button id="logoutBtn">Logout</button>
+    </header>
+
+    <main>
+        <h1>Welcome!</h1>
+
+        <p>Name: <span id="userName"></span></p>
+
+        <p>Email: <span id="userEmail"></span></p>
+
+        <h3>You have successfully logged in.</h3>
+    </main>
+
+    <script>
+        // Check login status
+        let loggedInEmail = localStorage.getItem("loggedInUser");
+
+        if (!loggedInEmail) {
+            window.location.replace("login.html");
+        } else {
+            // Get registered users
+            let users = JSON.parse(localStorage.getItem("users")) || [];
+
+            // Find logged-in user
+            let user = users.find((u) => u.email === loggedInEmail);
+
+            if (!user) {
+                localStorage.removeItem("loggedInUser");
+                window.location.replace("login.html");
+            } else {
+                document.getElementById("userName").textContent = user.name;
+                document.getElementById("userEmail").textContent = user.email;
+            }
+        }
+
+        // Logout
+        document.getElementById("logoutBtn").addEventListener("click", () => {
+            localStorage.removeItem("loggedInUser");
+
+            window.location.replace("login.html");
+        });
+    </script>
+
+</body>
+</html>

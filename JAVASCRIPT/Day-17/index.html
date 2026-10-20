@@ -1,0 +1,65 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+</head>
+<body>
+
+    <form id="registerForm">
+        <h2>Register</h2>
+
+        <input type="text" id="name" placeholder="Enter Name" required>
+
+        <input type="email" id="email" placeholder="Enter Email" required>
+
+        <input type="password" id="password"
+               placeholder="Enter Password" required>
+
+        <button type="submit">Register</button>
+
+        <p>Already registered? <a href="pages/login.html">Login</a></p>
+    </form>
+
+    <script>
+        let form = document.getElementById("registerForm");
+
+        form.addEventListener("submit", (event) => {
+            event.preventDefault();
+
+            let name = document.getElementById("name").value.trim();
+            let email = document.getElementById("email").value.trim().toLowerCase();
+            let password = document.getElementById("password").value;
+
+            let users = JSON.parse(localStorage.getItem("users")) || [];
+
+            // Check whether email already exists
+            let existingUser = users.find((u) => u.email === email);
+
+            if (existingUser) {
+                alert("Email already registered!");
+                return;
+            }
+
+            // Create user object
+            let user = {
+                name: name,
+                email: email,
+                password: password
+            };
+
+            // Save user
+            users.push(user);
+
+            localStorage.setItem("users", JSON.stringify(users));
+
+            alert("Registration successful!");
+
+            window.location.href = "pages/login.html";
+        });
+    </script>
+
+</body>
+</html>
