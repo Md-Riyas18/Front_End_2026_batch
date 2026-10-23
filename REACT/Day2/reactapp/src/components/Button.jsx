@@ -78,7 +78,7 @@ const Twobutton = ()=>{
 
         <h2>Two Button</h2>
         <button className="One">Start</button>
-        <button className="Two">End</button>
+
 
     </div>
     
