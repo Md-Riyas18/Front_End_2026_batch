@@ -445,17 +445,17 @@
 
 
 
-const data = []
+// const data = []
 
-const btnadd = document.getElementById("btnadd")
-const btnsub = document.getElementById("btnsub")
-const btnmul = document.getElementById("btnmul")
-const btndiv = document.getElementById("btndiv")
+// const btnadd = document.getElementById("btnadd")
+// const btnsub = document.getElementById("btnsub")
+// const btnmul = document.getElementById("btnmul")
+// const btndiv = document.getElementById("btndiv")
 
-btnadd.addEventListener("click",()=>{
+// btnadd.addEventListener("click",()=>{
     
 
-})
+
 
 
 
