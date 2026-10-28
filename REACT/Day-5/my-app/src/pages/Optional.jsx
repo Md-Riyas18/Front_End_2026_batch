@@ -1,8 +1,22 @@
 import React from 'react'
 
 const Optional = () => {
+
+  const value =true
   return (
-    <div>Optional</div>
+    <>
+    
+    
+    {value&&"This is Riyas"}
+
+    
+    
+    
+    
+    
+    
+    
+    </>
   )
 }
 

@@ -1,8 +1,14 @@
 import React from 'react'
 
 const Condition = () => {
+  const value = true
   return (
-    <div>Condition</div>
+    <>
+       <div >
+         {value?"This is MERN":"This is Bala"}
+
+       </div>
+    </>
   )
 }
 

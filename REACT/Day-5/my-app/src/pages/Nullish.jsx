@@ -1,8 +1,17 @@
 import React from 'react'
 
 const Nullish = () => {
+  const valueName = null
   return (
-    <div>Nullish</div>
+    <>
+    
+    {valueName??"This is Mugundhan"}
+    
+    
+    
+    
+    
+    </>
   )
 }
 
