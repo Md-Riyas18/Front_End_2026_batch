@@ -26,7 +26,7 @@ const App = () => {
     <Route path="/about"  element={<About/>}/>
     <Route path="/render"  element={<Rendering/>}/>
     <Route path="/string"  element={<StringRender/>}/>
-    <Route path="/number"  element={<NumberRender/>}/>
+    <Route path="/number"   element={<NumberRender/>}/>
     <Route path="/condition"  element={<Condition/>}/>
     <Route path="/optional"  element={<Optional/>}/>
     <Route path="/nullish"  element={<Nullish/>}/>
