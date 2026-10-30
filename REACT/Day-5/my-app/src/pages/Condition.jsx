@@ -1,7 +1,10 @@
 import React from 'react'
 
 const Condition = () => {
-  const value = true
+
+
+  // false ,0,"" flase ah show pannum otherwise true
+  const value = 0
   return (
     <>
        <div >

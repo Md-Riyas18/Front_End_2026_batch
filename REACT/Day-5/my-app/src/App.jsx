@@ -14,9 +14,6 @@ const App = () => {
   return (
    <>
    
-   
-   
-   
    <Navbar/>
    <Rendering/>
 
@@ -33,13 +30,6 @@ const App = () => {
 
 
    </Routes>
-   
-   
-   
-
-   
-   
-   
    
    </>
   )
