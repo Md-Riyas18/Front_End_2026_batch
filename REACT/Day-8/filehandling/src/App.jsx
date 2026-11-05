@@ -1,84 +1,136 @@
+
+
 import { useState } from "react"
+
+
+// const App = () => {
+
+//   const [datas,setDatas] = useState("")
+//   const [showDatas,setShowDatas] = useState(null)
+
+//   const handleChange = (e)=>{
+
+//     // console.log(e.target.value);
+    
+//     setDatas(e.target.value)
+    
+
+//   }
+
+//   const handleClick = (e)=>{
+
+//     e.preventDefault()
+
+//     if(datas%2==0){
+//       setShowDatas("Even Number")
+//     }else{
+//       setShowDatas("Odd number")
+//     }
+
+//   }
+
+//   return (
+//     <>
+//     <div>
+//       <form>
+//         <input type="text" onChange={handleChange}   />
+//         <button onClick={handleClick}>Submit</button>
+//       </form>
+
+//       <div>
+//         <h1>{showDatas}</h1>
+//       </div>
+//     </div>
+//     </>
+//   )
+// }
+
+// export default App
+
+
 
 
 const App = () => {
 
+  const [showName,setShowName] = useState("")
+  const [showAge,setShowAge] = useState("")
+  const [showNumber,setShowNumber] = useState("")
+  const [showDatas,setShowDatas]= useState([])
 
-  const[name,setName] = useState("")
-  const[age,setAge] = useState("")
-  const[course,setCourse] = useState("")
-  const[btn,setBtn] = useState([])
+  const handleChangeName = (e)=>{
 
-
-  const handlename =(e)=>{
-      setName(e.target.value)
-
-  }
-
-  const handleage =(e)=>{
-      setAge(e.target.value)
+    setShowName(e.target.value)
 
   }
+  const handleChangeage = (e)=>{
 
-  const handlecourse =(e)=>{
+    setShowAge(e.target.value)
     
-        setCourse(e.target.value)
+  }
+  const handleChangeNumber = (e)=>{
+      setShowNumber(e.target.value)
   }
 
-  const handlebtn =(e)=>{
+  const handleClick = (e)=>{
+
     e.preventDefault()
 
-    if(!name|| !age || !course){
-      alert("Please Fill The Form")
+
+    if(!showName || !showAge || !showNumber){
+      alert("FIll the form")
       return
     }
 
-
-    let value ={Name:name,Age:age,Course:course}
-
-    let  copy =[...btn]
-
-    copy.push(value)
+    let datas = {id:Date.now(),name:showName,age:showAge,numbers:showNumber}
     
-    setBtn(copy)
+    let copy = [...showDatas]
 
-    setName("")
-    setAge("")
-    setCourse("")
+    copy.push(datas)
+    
+    setShowDatas(copy)
+
+    setShowName("")
+    setShowAge("")
+    setShowNumber("")
 
 
   }
 
+  return (
+    <>
+    <form>
+      <input type="text" placeholder="Enter the Name" value={showName} onChange={handleChangeName} />
+      <input type="text" placeholder="Enter the Age" value={showAge} onChange={handleChangeage} />
+      <input type="text" placeholder="Enter the Mobile" value={showNumber} onChange={handleChangeNumber} />
+      <button onClick={handleClick}>Register</button>
+    </form>
 
-  return (<>
-  
-  <div>
-  <form className="p-5 flex gap-3">
-      <input className="border-2" type="text" value ={name} onChange={handlename}  />
-      <input className="border-2" type="number" value ={age} onChange={handleage}/>
-      <input className="border-2" type="text" value ={course} onChange={handlecourse}/>
-      <button className="border-2" onClick={handlebtn}>Submit</button>
-  </form>
-  </div>
+    <div>
+      <table>
+        <thead>
+          <tr>
+            <th>
+              S.NO
+            </th>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Number</th>
+          </tr>
+        </thead>
 
-
-  <div>
-      {btn.map((e,i)=>(
-
-        <div key={i}>
-
-          <h1>Name:{e.Name}</h1>
-          <h1>Age:{e.Age}</h1>
-          <h1>
-            Course:{e.Course}
-          </h1>
-        </div>
-      ))}
-  </div>
-  
-  
-  
-  </>
+        <tbody>
+            {showDatas.map((e,i)=>(
+              <tr>
+                <td>{e.id}</td>
+                <td>{e.name}</td>
+                <td>{e.age}</td>
+                <td>{e.numbers}</td>
+              </tr>
+            ))}
+        </tbody>
+      </table>
+    </div>
+    </>
   )
 }
 
