@@ -1,9 +1,4 @@
 
-
-
-
-
-
 import rain from '../assets/day2/morning1.jpg'
 import rain1 from '../assets/day2/morning2.jpg'
 import rain2 from '../assets/day2/morning3.jpg'
@@ -117,8 +112,8 @@ const DayTwo = () => {
               number="03"
               title="Project Work"
               images={[
-                { src: work, alt: 'Room visit' },
-                { src: work2, alt: 'Evening sky' }
+                { src: work, alt: 'work1' },
+                { src: work2, alt: 'work2' }
               ]}
             >
               After coming up, I decided to look at the project work, 
@@ -131,9 +126,9 @@ const DayTwo = () => {
             number="04"
             title="Get-ready To Go Broo House For celebrating Diwali"
             images={[
-              { src: outside, alt: "Mani's biryani" },
-              { src: outside1, alt: "Mani's biryani" },
-              { src: outside2, alt: "Mani's biryani" }
+              { src: outside, alt: "outside1" },
+              { src: outside1, alt: "outside2" },
+              { src: outside2, alt: "outside3" }
             ]}
           >
             After that, my brother sent me a message saying, "Leave at 10:00. Take the metro from Vadapalani and get off at the airport. Once you get off, call me." He invited me to his house to celebrate Diwali. So, I got ready and was about to leave when it started raining heavily. 
@@ -146,8 +141,8 @@ const DayTwo = () => {
             number="05"
             title="Metro Vadapalani-->Air-Port"
             images={[
-              { src: metro, alt: 'Easybuy shopping' },
-              { src: metro2, alt: 'Shopping clothes' }
+              { src: metro, alt: 'metro1' },
+              { src: metro2, alt: 'metro1' }
             ]}
           >
             I came to Vadapalani metro while it was drizzling. From there, 
@@ -160,7 +155,7 @@ const DayTwo = () => {
             number="06"
             title="Movie Time"
             images={[
-              { src: movie, alt: 'Juice shop' }
+              { src: movie, alt: 'movie1' }
             ]}
           >
             After that, my brother came. We went home on his bike. We went home, ate, and then decided to watch a movie, so we searched for one. 
@@ -173,8 +168,8 @@ const DayTwo = () => {
             number="07"
             title="Firing Crackers At Night"
             images={[
-              { src: cracker, alt: 'Cracker shop' },
-              { src: cracker1, alt: 'Cracker shop' },
+              { src: cracker, alt: 'Cracker1' },
+              { src: cracker1, alt: 'Cracker2' },
 
             ]}
           >
@@ -187,8 +182,8 @@ const DayTwo = () => {
             number="08"
             title="Complete Diwali Day With A Coffee "
             images={[
-              { src: coffee, alt: 'Children celebrating Diwali' },
-              { src: coffee1, alt: 'Children celebrating Diwali' }
+              { src: coffee, alt: 'coffee1' },
+              { src: coffee1, alt: 'coffee2' }
             ]}
           >
             After that, I left their house at 7:30. I left at 7:30 and reached KK Nagar by 8:30. We just rode the bike around and then had a coffee to complete the day.
