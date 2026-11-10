@@ -20,7 +20,7 @@ import { Link } from 'react-router-dom'
 import StoryCard from '../components/StoryCard'
 
 
-// Reusable Story Card
+
 
 
 const DayOne = () => {
@@ -31,7 +31,7 @@ const DayOne = () => {
     <div className="min-h-screen bg-[#FFF5E6] pt-36 pb-16 px-4 md:px-8">
 
       
-{/* Bottom Navigation Buttons */}
+
 
 <div className="flex justify-between items-center pt-6  border-orange-200">
 

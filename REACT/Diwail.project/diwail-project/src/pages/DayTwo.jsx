@@ -22,7 +22,6 @@ import { Link } from 'react-router-dom'
 import StoryCard from '../components/StoryCard'
 
 
-// Reusable Story Card
 
 
 const DayTwo = () => {
@@ -50,7 +49,7 @@ const DayTwo = () => {
 </div>
       <div className="max-w-6xl mx-auto">
 
-        {/* Page Header */}
+     
         <div className="text-center mb-12">
 
           <p className="text-orange-600 uppercase tracking-[5px] font-bold text-sm">
