@@ -21,8 +21,23 @@ import beach from '../assets/day3/beach.jpg'
 import beach2 from '../assets/day3/beach1.jpg'
 
 
-import coffee from '../assets/day2/coffee.jpg'
-import coffee1 from '../assets/day2/coffee1.jpg'
+import road from '../assets/day3/road.jpg'
+import road2 from '../assets/day3/road2.jpg'
+
+
+import park from '../assets/day3/park2.jpg'
+import park2 from '../assets/day3/park3.jpg'
+
+import lulu from '../assets/day3/lulu.jpg'
+import lulu2 from '../assets/day3/lulu2.jpg'
+
+import road3 from '../assets/day3/park.jpg'
+
+import nigthfood from '../assets/day3/nigthfood.jpg'
+
+import movie2 from '../assets/day3/movie2.jpg'
+import movie3 from '../assets/day3/movie3.jpg'
+
 
 import { Link } from 'react-router-dom'
 
@@ -103,7 +118,7 @@ const DayThree = () => {
           
           <StoryCard
             number="02"
-            title="Morning Food"
+            title="Morning Breakfast"
             images={[
               { src: food, alt: 'Morning food' }
             ]}
@@ -160,7 +175,7 @@ const DayThree = () => {
          
           <div className="md:col-span-2">
             <StoryCard
-              number="03"
+              number="06"
               title="Patinapakkam Beach"
               images={[
                 { src: beach, alt: 'beach visit' },
@@ -173,19 +188,82 @@ const DayThree = () => {
           </div>
 
 
-  
-
-
           <StoryCard
-            number="08"
-            title="Complete Diwali Day With A Coffee "
+            number="07"
+            title="Night Ride "
             images={[
-              { src: coffee, alt: 'Children celebrating Diwali' },
-              { src: coffee1, alt: 'Children celebrating Diwali' }
+              { src: road, alt: 'road' },
+              { src: road2, alt: 'road2' }
             ]}
           >
             After that, I left their house at 7:30. I left at 7:30 and reached KK Nagar by 8:30. We just rode the bike around and then had a coffee to complete the day.
           </StoryCard>
+
+
+          <StoryCard
+            number="08"
+            title="Anna Nagar Tower Park "
+            images={[
+              { src: park, alt: 'park' },
+              { src: park2, alt: 'park2' }
+            ]}
+          >
+            After that, I left their house at 7:30. I left at 7:30 and reached KK Nagar by 8:30. We just rode the bike around and then had a coffee to complete the day.
+          </StoryCard>
+
+
+          <div className="md:col-span-2">
+            <StoryCard
+              number="09"
+              title="Lulu Mall"
+              images={[
+                { src: lulu, alt: 'lulu' },
+                { src: lulu2, alt: 'lulu2' }
+              ]}
+            >
+              After coming up, I decided to look at the project work, 
+              so I was looking at the project work given by the sir.
+            </StoryCard>
+          </div>
+
+
+          <StoryCard
+            number="10"
+            title="Return to Vadapalani "
+            images={[
+              { src: road3, alt: 'return' },
+        
+            ]}
+          >
+            After that, I left their house at 7:30. I left at 7:30 and reached KK Nagar by 8:30. We just rode the bike around and then had a coffee to complete the day.
+          </StoryCard>
+
+          <StoryCard
+            number="11"
+            title="Night Dinner "
+            images={[
+              { src: nigthfood , alt: 'nigthfood' },
+        
+            ]}
+          >
+            After that, I left their house at 7:30. I left at 7:30 and reached KK Nagar by 8:30. We just rode the bike around and then had a coffee to complete the day.
+          </StoryCard>
+
+
+
+          <div className="md:col-span-2">
+            <StoryCard
+              number="12"
+              title="Movie in Palazzo"
+              images={[
+                { src: movie2, alt: 'moive' },
+                { src: movie3, alt: 'movie' }
+              ]}
+            >
+              After coming up, I decided to look at the project work, 
+              so I was looking at the project work given by the sir.
+            </StoryCard>
+          </div>
 
 
         </div>

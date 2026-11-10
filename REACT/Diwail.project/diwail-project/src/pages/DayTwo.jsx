@@ -96,7 +96,7 @@ const DayTwo = () => {
           
           <StoryCard
             number="02"
-            title="Morning Food"
+            title="Morning Breakfast"
             images={[
               { src: food, alt: 'Morning food' }
             ]}
