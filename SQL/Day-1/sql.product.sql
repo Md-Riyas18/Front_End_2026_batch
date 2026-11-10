@@ -1,0 +1,1 @@
+SELECT * FROM where_house_db.product;
