@@ -40,3 +40,32 @@ alter table employees change Employees_Name Employee_Name varchar(60);
 alter table employees modify Employees_Salary DECIMAL(12,2);
 
 alter table employees add Employee_Email varchar(50) after Employee_Name;
+
+
+create table Products(
+
+Product_ID int unique primary key auto_increment,
+Product_Name varchar(50),
+Product_Price varchar(50),
+Product_Category varchar(50),
+Product_Stock varchar(50),
+Product_Manufacturing_Date date
+);
+
+
+alter table Products modify Product_Name varchar(50) not null ;
+
+alter table Products modify Product_price varchar(50) not null;
+
+alter table Products alter column Product_Category set default "Laptop";
+
+alter table Products alter column Product_Manufacturing_Date set default "2026-12-01";
+
+insert into Products (Product_Name,Product_Price,Product_Stock) values("Asus","Rs:40,000","5");
+insert into Products (Product_Name,Product_Price,Product_Stock) values("Asus","Rs:40,000","5");
+insert into Products (Product_Name,Product_Price,Product_Stock) values("Lenova","Rs:50,000","7");
+insert into Products (Product_Name,Product_Price,Product_Stock) values("Acer","Rs:90,000","10");
+insert into Products (Product_Name,Product_Price,Product_Stock) values("Rog","Rs:110,000","15");
+insert into Products (Product_Name,Product_Price,Product_Stock) values("HP","Rs:50,000","13");
+insert into Products (Product_Name,Product_Price,Product_Stock) values("Think pad","Rs:70,000","3");
+
