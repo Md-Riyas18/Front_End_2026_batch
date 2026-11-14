@@ -69,3 +69,23 @@ insert into Products (Product_Name,Product_Price,Product_Stock) values("Rog","Rs
 insert into Products (Product_Name,Product_Price,Product_Stock) values("HP","Rs:50,000","13");
 insert into Products (Product_Name,Product_Price,Product_Stock) values("Think pad","Rs:70,000","3");
 
+create table Department(
+Department_Id int unique primary key auto_increment,
+Department_Name varchar(50) not null,
+Department_Category varchar(50) not null,
+Department_Count int not null
+
+
+);
+
+
+insert into Department (Department_Name,Department_Category,Department_Count) values("MERN","FS",15);
+insert into Department (Department_Name,Department_Category,Department_Count) values("Java","BS",5);
+insert into Department (Department_Name,Department_Category,Department_Count) values("Python","FS",50);
+insert into Department (Department_Name,Department_Category,Department_Count) values("Dotnet","Bs",405);
+
+
+
+
+
+
